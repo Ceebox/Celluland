@@ -1,5 +1,6 @@
 import { Renderer } from "./modules/rendering/Renderer.mjs";
 
+let renderer = undefined;
 function run() {
     let canvas = document.getElementById("canvas");
     if (!canvas) {
@@ -7,7 +8,7 @@ function run() {
         return;
     }
 
-    let renderer = new Renderer(canvas);
+    renderer = new Renderer(canvas);
 
     window.addEventListener("keydown", (key) => {
 
@@ -17,16 +18,30 @@ function run() {
             return;
         }
 
-        if(key.key !== "/") {
+        if (key.key !== "/") {
             return;
         }
 
         const spector = new SPECTOR.Spector();
-        const result = spector.captureCanvas(canvas);
-        console.log(result);
+        spector.displayUI(); // optional, but shows the UI
+
+        renderer.render();
+
+        // Capture from canvas:
+        spector.captureCanvas(canvas).then((result) => {
+            const resultView = new SPECTOR.ResultView(spector);
+            resultView.display(result); // show the capture result
+        });
     });
 }
 
 window.addEventListener("load", function () {
     run();
 });
+
+function render() {
+    renderer.render();
+    requestAnimationFrame(() => render());
+}
+
+requestAnimationFrame(() => render());

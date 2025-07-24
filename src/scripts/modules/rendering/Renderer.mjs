@@ -3,6 +3,10 @@ import { RenderPassManager } from "./RenderPassManager.mjs";
 import { BaseRenderPass } from "./BaseRenderPass.mjs";
 
 export class Renderer {
+
+    #shaderManager = null;
+    _renderPassManager = null;
+
     constructor(canvas) {
         let gl = canvas.getContext("webgl2", {
             desynchronized: true,
@@ -18,10 +22,15 @@ export class Renderer {
             throw new Error("WebGL 2 is not supported by this browser.");
         }   
 
-        let shaderManager = new ShaderManager(gl);
-        let renderPassManager = new RenderPassManager(shaderManager);
-        renderPassManager.addRenderPass(new BaseRenderPass(gl));
+        this.#shaderManager = new ShaderManager(gl);
+        this._renderPassManager = new RenderPassManager(this.#shaderManager);
+        this._renderPassManager.addRenderPass(new BaseRenderPass(gl));
 
-        renderPassManager.render();
+        window.requestAnimationFrame(this.render.bind(this));
+    }
+
+    render(timestamp) {
+        this._renderPassManager.render();
+        window.requestAnimationFrame(() => this.render);
     }
 }

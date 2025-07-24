@@ -44,7 +44,6 @@ export class BaseRenderPass extends RenderPass {
 
         gl.uniform2f(resolutionUniform, gl.canvas.width, gl.canvas.height);
 
-        // gl.bindVertexArray(vao);
         gl.drawArrays(gl.TRIANGLES, 0, 6);
     }
 }
