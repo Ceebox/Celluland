@@ -31,7 +31,7 @@ export class ShaderManager {
         return shader;
     }
 
-    #createShader(gl, type, src) {
+    #createGlShader(gl, type, src) {
         let shader = gl.createShader(type);
         gl.shaderSource(shader, src);
         gl.compileShader(shader);
@@ -48,8 +48,8 @@ export class ShaderManager {
 
     #createProgram(gl, shader) {
 
-        let vertex = this.#createShader(gl, gl.VERTEX_SHADER, shader.getVertexSource());
-        let frag = this.#createShader(gl, gl.FRAGMENT_SHADER, shader.getFragSource());
+        let vertex = this.#createGlShader(gl, gl.VERTEX_SHADER, shader.getVertexSource());
+        let frag = this.#createGlShader(gl, gl.FRAGMENT_SHADER, shader.getFragSource());
 
         let program = gl.createProgram();
         gl.attachShader(program, vertex);

@@ -17,8 +17,11 @@ export class RenderPass {
 
         this._gl = gl;
         this._shader = shader;
+        this._program = () => shader.getProgram();
+    }
 
-        this._program = shader.getProgram();
+    getShader() {
+        return this._shader;
     }
     
     render() {}
