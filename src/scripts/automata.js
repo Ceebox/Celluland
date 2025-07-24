@@ -39,9 +39,9 @@ window.addEventListener("load", function () {
     run();
 });
 
-function render() {
+function animationFrameRequested(timestamp) {
     renderer.render();
-    requestAnimationFrame(() => render());
+    requestAnimationFrame(() => animationFrameRequested());
 }
 
-requestAnimationFrame(() => render());
+requestAnimationFrame(() => animationFrameRequested());

@@ -25,12 +25,9 @@ export class Renderer {
         this.#shaderManager = new ShaderManager(gl);
         this._renderPassManager = new RenderPassManager(this.#shaderManager);
         this._renderPassManager.addRenderPass(new BaseRenderPass(gl));
-
-        window.requestAnimationFrame(this.render.bind(this));
     }
 
     render(timestamp) {
         this._renderPassManager.render();
-        window.requestAnimationFrame(() => this.render);
     }
 }
