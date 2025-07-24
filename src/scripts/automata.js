@@ -1,4 +1,4 @@
-import { Renderer } from "./modules/renderer.js";
+import { Renderer } from "./modules/rendering/Renderer.mjs";
 
 function run() {
     let renderer = new Renderer();
