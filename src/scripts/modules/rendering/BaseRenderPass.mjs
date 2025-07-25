@@ -9,6 +9,7 @@ export class BaseRenderPass extends RenderPass {
     render() {
         const gl = this._gl;
         const numInstances = 50;
+        const cellSize = 4;
 
         const positions = new Float32Array([
             0, 0,
@@ -39,8 +40,8 @@ export class BaseRenderPass extends RenderPass {
 
         const offsets = new Float32Array(numInstances * 2);
         for (let i = 0; i < numInstances; ++i) {
-            offsets[2 * i + 0] = Math.random() * (gl.canvas.width - 100);
-            offsets[2 * i + 1] = Math.random() * (gl.canvas.height - 1);
+            offsets[2 * i + 0] = Math.floor(Math.random() * (gl.canvas.width - 1));
+            offsets[2 * i + 1] = Math.floor(Math.random() * (gl.canvas.height - 1));
         }
 
         const offsetBuffer = gl.createBuffer();
@@ -53,7 +54,7 @@ export class BaseRenderPass extends RenderPass {
         gl.vertexAttribDivisor(offsetAttrib, 1); // Advance per instance
 
         const colours = new Float32Array(numInstances * 4); // RGBA
-        for (let i = 0; i < numInstances; ++i) {
+        for (let i = 0; i < numInstances; i++) {
             colours[4 * i + 0] = i / numInstances;
             colours[4 * i + 1] = i / numInstances;
             colours[4 * i + 2] = i / numInstances;
@@ -70,13 +71,15 @@ export class BaseRenderPass extends RenderPass {
         gl.vertexAttribDivisor(colourAttrib, 1); // Advance per instance
 
         const resolutionUniform = gl.getUniformLocation(this._program(), "uResolution");
+        const cellSizeUniform = gl.getUniformLocation(this._program(), "uCellSize");
         
         gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-        gl.clearColor(0, 0, 0, 0);
+        gl.clearColor(0, 0, 0, 1);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
 
         gl.useProgram(this._program());
 
+        gl.uniform1i(cellSizeUniform, cellSize);
         gl.uniform2f(resolutionUniform, gl.canvas.width, gl.canvas.height);
 
         gl.drawElementsInstanced(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0, numInstances);
