@@ -8,7 +8,7 @@ export class Renderer {
     _renderPassManager = null;
 
     constructor(canvas) {
-        let gl = canvas.getContext("webgl2", {
+        const gl = canvas.getContext("webgl2", {
             desynchronized: true,
             antialias: false,
             powerPreference: "low-power",

@@ -19,7 +19,7 @@ export class ShaderManager {
             throw new Error("Invalid shader type");
         }
 
-        let name = shader.constructor.name;
+        const name = shader.constructor.name;
         if (this.hasShader(name)) {
             throw new Error(`Shader with name ${name} already exists`);
         }
@@ -32,11 +32,11 @@ export class ShaderManager {
     }
 
     #createGlShader(gl, type, src) {
-        let shader = gl.createShader(type);
+        const shader = gl.createShader(type);
         gl.shaderSource(shader, src);
         gl.compileShader(shader);
 
-        let complete = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
+        const complete = gl.getShaderParameter(shader, gl.COMPILE_STATUS);
         if (complete) {
             return shader;
         }
@@ -48,17 +48,17 @@ export class ShaderManager {
 
     #createProgram(gl, shader) {
 
-        let vertex = this.#createGlShader(gl, gl.VERTEX_SHADER, shader.getVertexSource());
-        let frag = this.#createGlShader(gl, gl.FRAGMENT_SHADER, shader.getFragSource());
+        const vertex = this.#createGlShader(gl, gl.VERTEX_SHADER, shader.getVertexSource());
+        const frag = this.#createGlShader(gl, gl.FRAGMENT_SHADER, shader.getFragSource());
 
-        let program = gl.createProgram();
+        const program = gl.createProgram();
         gl.attachShader(program, vertex);
         gl.attachShader(program, frag);
         gl.linkProgram(program);
 
         shader.setProgram(program);
 
-        let complete = gl.getProgramParameter(program, gl.LINK_STATUS);
+        const complete = gl.getProgramParameter(program, gl.LINK_STATUS);
         if (complete) {
             return program;
         }
