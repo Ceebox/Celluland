@@ -3,26 +3,34 @@ import { Shader } from "./Shader.mjs";
 export class BaseShader extends Shader {
 
     #vertexSource = `#version 300 es
-precision highp float;
-
 in vec2 iPosition;
+in vec2 iOffset;
+in vec4 iColour;
+
 uniform vec2 uResolution;
 
+out vec4 vColour;
+
 void main() {
-    // vec2 clipPos = ((iPosition / uResolution) * 2.0) - 1.0;
-    vec2 zeroToOne = iPosition / uResolution;
-    vec2 zeroToTwo = zeroToOne * 2.0;
-    vec2 clipPos = zeroToTwo - 1.0;
-    gl_Position = vec4(clipPos * vec2(1, -1), 0.0, 1.0);
+    // Scale and offset
+    vec2 pos = iPosition * vec2(100, 100) + iOffset;
+    gl_Position = vec4(
+        (pos / uResolution) * 2.0 - 1.0,
+        0,
+        1
+    );
+
+    // Pass this over to the fragment shader
+    vColour = iColour;
 }`;
 
     #fragSource = `#version 300 es
 precision highp float;
-
+in vec4 vColour;
 out vec4 outColour;
 
 void main() {
-outColour = vec4(0.8, 0.3, 0.1, 1.0);
+    outColour = vColour;
 }`;
 
     /**

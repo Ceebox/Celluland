@@ -23,7 +23,8 @@ function run() {
         }
 
         const spector = new SPECTOR.Spector();
-        spector.displayUI(); // optional, but shows the UI
+        spector.spyCanvases();
+        spector.displayUI();
 
         renderer.render();
 
