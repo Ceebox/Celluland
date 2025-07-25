@@ -1,10 +1,13 @@
 export class InputManager {
     
-    constructor() {
+    /**
+     * @param {HTMLCanvasElement} canvas 
+     */
+    constructor(canvas) {
         this._keys = new Set();
         this._mouseButtons = new Set();
         this._mousePosition = { x: 0, y: 0 };
-        this._canvas = document.querySelector("canvas");
+        this._canvas = canvas;
 
         document.addEventListener("keydown", (event) => {
             this._keys.add(event.key);
