@@ -1,5 +1,6 @@
 import { InputManager } from "./InputManager.mjs";
 import { Renderer } from "./rendering/Renderer.mjs";
+import { CellManager } from "./automata/CellManager.mjs";
 
 export class ProgramManager {
 
@@ -7,6 +8,9 @@ export class ProgramManager {
      * @param {HTMLCanvasElement} canvas 
      */
     constructor(canvas) {
+
+        const CELL_SIZE = 8;
+
         this._paused = true;
         this._fps = 4;
         this._canvas = canvas;
@@ -19,10 +23,15 @@ export class ProgramManager {
             this._spector.spyCanvases();
         }
 
+        const rowCount = Math.floor(canvas.height / CELL_SIZE);
+        const columnCount = Math.floor(canvas.width / CELL_SIZE);
+
+        this._cellManager = new CellManager(rowCount, columnCount);
         this._inputManager = new InputManager(canvas);
         this._renderer = new Renderer(canvas);
 
         // Produce the first frame (even though we are paused)
+        this._renderer.setCellInfo(this._cellManager.getCellInfo());
         this._renderer.render();
 
         this.handlePause = this.handlePause.bind(this);

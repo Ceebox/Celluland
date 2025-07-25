@@ -25,6 +25,26 @@ export class RenderPassManager {
 
         this.#passes.push(pass);
     }
+
+    hasRenderPass(passType) {
+        if (!passType) {
+            return this.#passes.length > 0;
+        }
+
+        return this.#passes.some(pass => pass instanceof passType);
+    }
+
+    /**
+     * @param {typeof} passType
+     */
+    getRenderPass(passName) {
+        const pass = this.#passes.find(p => p.constructor.name === passName);
+        if (!pass) {
+            throw new Error(`No render pass of type ${passName.name} found.`);
+        }
+
+        return pass;
+    }
     
     render() {
         for (const pass of this.#passes) {

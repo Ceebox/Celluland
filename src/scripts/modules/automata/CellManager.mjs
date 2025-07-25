@@ -10,7 +10,7 @@ export class CellManager {
         for (let i = 0; i < this._rowCount; i++) {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
-                this.#cells[i][j] = 0;
+                this.#cells[i][j] = Math.random() < 0.5 ? 1 : 0; // Randomly initialize cells to 0 or 1
             }
         }
     }
@@ -25,5 +25,9 @@ export class CellManager {
                 this.#cells[i][j] = newStates[i][j];
             }
         }
+    }
+
+    getCellInfo() {
+        return this.#cells;
     }
 }

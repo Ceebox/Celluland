@@ -7,6 +7,8 @@ export class Renderer {
     #shaderManager = null;
     _renderPassManager = null;
 
+    #currentCellInfo = null;
+
     constructor(canvas) {
         const gl = canvas.getContext("webgl2", {
             desynchronized: true,
@@ -20,7 +22,7 @@ export class Renderer {
                 "Please aquire a new computer.";
 
             throw new Error("WebGL 2 is not supported by this browser.");
-        }   
+        }
 
         this.#shaderManager = new ShaderManager(gl);
         this._renderPassManager = new RenderPassManager(this.#shaderManager);
@@ -29,5 +31,17 @@ export class Renderer {
 
     render(timestamp) {
         this._renderPassManager.render();
+    }
+
+    setCellInfo(cellInfo) {
+        if (!cellInfo) {
+            throw new Error("Cell info is required");
+        }
+
+        this.#currentCellInfo = cellInfo;
+        const pass = this._renderPassManager.getRenderPass(BaseRenderPass.prototype.constructor.name); 
+        console.log(pass);
+        
+        pass.setCellInfo(cellInfo);
     }
 }
