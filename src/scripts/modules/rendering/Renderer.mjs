@@ -14,9 +14,9 @@ export class Renderer {
             powerPreference: "low-power",
         });
 
-        // Do people not have WebGL 2 anymore?
+        // Do people still not have WebGL 2?
         if (!gl) {
-            document.querySelector("#main-text").innerHtml =
+            document.querySelector("#error-text").innerHtml =
                 "Please aquire a new computer.";
 
             throw new Error("WebGL 2 is not supported by this browser.");
