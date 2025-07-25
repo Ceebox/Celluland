@@ -1,6 +1,8 @@
 import { Renderer } from "./modules/rendering/Renderer.mjs";
 
+const FPS = 4;
 let renderer = undefined;
+
 function run() {
     let canvas = document.getElementById("canvas");
     if (!canvas) {
@@ -41,8 +43,12 @@ window.addEventListener("load", function () {
 });
 
 function animationFrameRequested(timestamp) {
-    renderer.render();
-    requestAnimationFrame(() => animationFrameRequested());
+    setTimeout(() => {
+            renderer.render();
+            requestAnimationFrame(() => animationFrameRequested());
+        }, 
+        1000 / FPS
+    );
 }
 
 requestAnimationFrame(() => animationFrameRequested());
