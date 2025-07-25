@@ -36,6 +36,8 @@ function run() {
             resultView.display(result); // show the capture result
         });
     });
+
+    requestAnimationFrame(() => animationFrameRequested());
 }
 
 window.addEventListener("load", function () {
@@ -43,12 +45,11 @@ window.addEventListener("load", function () {
 });
 
 function animationFrameRequested(timestamp) {
+    renderer.render();
+
     setTimeout(() => {
-            renderer.render();
             requestAnimationFrame(() => animationFrameRequested());
         }, 
         1000 / FPS
     );
 }
-
-requestAnimationFrame(() => animationFrameRequested());
