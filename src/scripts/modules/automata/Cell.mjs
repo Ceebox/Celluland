@@ -28,6 +28,10 @@ export class Cell {
         return this._cellInfo.state;
     }
 
+    getStrategy() {
+        return this._strategy;
+    }
+
     advance() {
         this._cellInfo = this._nextCellInfo;
         this._nextCellInfo = null;
@@ -38,7 +42,7 @@ export class Cell {
      */
     simulate(strategyController) {
         if (this._strategy !== null) {
-            const newState = strategyController.executeStrategy(this._strategy);
+            const newState = strategyController.executeStrategy(this);
             this._nextCellInfo = new CellInfo(this._cellInfo.rowCount, this._cellInfo.columnCount, newState);
         } else {
             throw new Error("No strategy set for this cell.");

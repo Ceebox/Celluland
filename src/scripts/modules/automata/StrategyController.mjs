@@ -1,3 +1,5 @@
+import { Cell } from "./Cell.mjs";
+
 export class StrategyController {
 
     constructor(cellManager) {
@@ -13,19 +15,32 @@ export class StrategyController {
         cell.simulate(this);
     }
 
-    createApi(strategy) {
-        const api = {
+    createApi(currentCell, strategy) {
+        const cellApi = {
+            x : currentCell.getColumn(),
+            y : currentCell.getRow(),
+            state : currentCell.getState(),
+            getNeighbours() {
+                return this._cellManager.getNeighbours(
+                    currentCell.getRow(),
+                    currentCell.getColumn()
+                );
+            },
         };
 
-        return new Function('api', `
+        return new Function("cell", `
             return (function() {
                 ${strategy}
             })();
-        `).bind(null, api);
+        `).bind(null, cellApi);
     }
 
-    executeStrategy(strategy) {
-        const result = this.createApi(strategy)();
+    /**
+     * @param {Cell} cell 
+     * @returns 
+     */
+    executeStrategy(cell) {
+        const result = this.createApi(cell, cell.getStrategy())();
         if (typeof result !== "number") {
             throw new Error("Strategy must return a number representing the new state.");
         }
