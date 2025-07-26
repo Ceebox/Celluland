@@ -63,7 +63,7 @@ export class BaseRenderPass extends RenderPass {
         for (let i = 0; i < this._cellInfo.length; i++) {
             for (let j = 0; j < this._cellInfo[i].length; j++) {
                 const index = i * this._cellInfo[i].length + j;
-                const state = this._cellInfo[i][j];
+                const state = this._cellInfo[i][j].getState();
 
                 colours[4 * index + 0] = state; // R
                 colours[4 * index + 1] = state; // G

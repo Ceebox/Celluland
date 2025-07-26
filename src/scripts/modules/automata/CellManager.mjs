@@ -1,3 +1,5 @@
+import { Cell } from "./Cell.mjs";
+
 export class CellManager {
 
     #cells = [];
@@ -10,7 +12,7 @@ export class CellManager {
         for (let i = 0; i < this._rowCount; i++) {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
-                this.#cells[i][j] = Math.random() < 0.5 ? 1 : 0; // Randomly initialize cells to 0 or 1
+                this.#cells[i][j] = new Cell(i, j, 0);
             }
         }
     }
@@ -22,7 +24,7 @@ export class CellManager {
 
         for (let i = 0; i < this._rowCount; i++) {
             for (let j = 0; j < this._columnCount; j++) {
-                this.#cells[i][j] = newStates[i][j];
+                // this.#cells[i][j] = newStates[i][j];
             }
         }
     }
