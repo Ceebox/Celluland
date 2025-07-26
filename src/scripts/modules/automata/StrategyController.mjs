@@ -34,6 +34,6 @@ export class StrategyController {
     }
 
     getCellInfo() {
-        return this.cellManager.getCellInfo();
+        return this._cellManager.getCellInfo();
     }
 }
