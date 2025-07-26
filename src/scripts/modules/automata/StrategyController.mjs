@@ -6,22 +6,22 @@ export class StrategyController {
         this._cellManager = cellManager;
     }
 
-    updateStrategy(newStates) {
-        this.cellManager.updateCells(newStates);
-        this.renderPass.updateCellInfo(this.cellManager.getCellInfo());
+    simulateCell(cell, phase) {
+        cell.simulate(this, phase);
     }
 
-    simulateCell(cell) {
-        cell.simulate(this);
-    }
-
-    createApi(currentCell, strategy) {
+    createApi(currentCell, phase, strategy) {
+        const ctx = this;
+        const cellManager = this._cellManager;
         const cellApi = {
+            ctx : ctx,
+            cellManager : cellManager,
+            phase : phase,
             x : currentCell.getColumn(),
             y : currentCell.getRow(),
             state : currentCell.getState(),
             getNeighbours() {
-                return this._cellManager.getNeighbours(
+                return cellManager.getNeighbours(
                     currentCell.getRow(),
                     currentCell.getColumn()
                 );
@@ -39,8 +39,8 @@ export class StrategyController {
      * @param {Cell} cell 
      * @returns 
      */
-    executeStrategy(cell) {
-        const result = this.createApi(cell, cell.getStrategy())();
+    executeStrategy(cell, phase) {
+        const result = this.createApi(cell, phase, cell.getStrategy())();
         if (typeof result !== "number") {
             throw new Error("Strategy must return a number representing the new state.");
         }

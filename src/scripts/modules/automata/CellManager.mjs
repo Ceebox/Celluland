@@ -4,6 +4,7 @@ import { StrategyController } from "./StrategyController.mjs";
 export class CellManager {
 
     #cells = [];
+    #phase = 0;
 
     constructor(rowCount, columnCount) {
         this._rowCount = rowCount;
@@ -23,7 +24,7 @@ export class CellManager {
     updateCells() {
         for (let i = 0; i < this._rowCount; i++) {
             for (let j = 0; j < this._columnCount; j++) {
-                this._strategyController.simulateCell(this.#cells[i][j]);
+                this._strategyController.simulateCell(this.#cells[i][j], this.#phase);
             }
         }
 
@@ -32,6 +33,8 @@ export class CellManager {
                 this.#cells[i][j].advance();
             }
         }
+
+        this.#phase++;
     }
 
     /**
