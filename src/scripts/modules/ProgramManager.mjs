@@ -47,6 +47,10 @@ export class ProgramManager {
             this.handlePause(event);
             this.handleDebug(event);
         });
+
+        if (!this._paused) {
+            this.start();
+        }
     }
 
     start() {
