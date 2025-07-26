@@ -9,10 +9,11 @@ export class ProgramManager {
      */
     constructor(canvas, config) {
 
-        const CELL_SIZE = 8;
-
         this._paused = config.paused !== undefined ? config.paused : true;
         this._fps = config.fps !== undefined ? config.fps : 4;
+        this._editable = config.editable !== undefined ? config.editable : false;
+        this._cellSize = config.cellSize !== undefined ? config.cellSize : 8;
+
         this._canvas = canvas;
         this._simulateNextFrame = true;
 
@@ -28,12 +29,12 @@ export class ProgramManager {
             }
         }
 
-        const rowCount = Math.floor(canvas.height / CELL_SIZE);
-        const columnCount = Math.floor(canvas.width / CELL_SIZE);
+        const rowCount = Math.floor(canvas.height / this._cellSize);
+        const columnCount = Math.floor(canvas.width / this._cellSize);
 
         this._cellManager = new CellManager(rowCount, columnCount);
         this._inputManager = new InputManager(canvas);
-        this._renderer = new Renderer(canvas);
+        this._renderer = new Renderer(canvas, this._cellSize);
 
         // Produce the first frame (even though we are paused)
         this.#updateCore();

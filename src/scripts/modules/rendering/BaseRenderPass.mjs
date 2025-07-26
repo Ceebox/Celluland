@@ -3,15 +3,15 @@ import { RenderPass } from "./RenderPass.mjs";
 
 export class BaseRenderPass extends RenderPass {
 
-    constructor(gl) {
+    constructor(gl, cellSize) {
         super(gl, new BaseShader());
 
+        this._cellSize = cellSize;
         this._cellInfo = [];
     }
 
     render() {
         const gl = this._gl;
-        const cellSize = 8;
         const numCells = this._cellInfo.length * this._cellInfo[0].length;
 
         const positions = new Float32Array([
@@ -45,8 +45,8 @@ export class BaseRenderPass extends RenderPass {
         for (let i = 0; i < this._cellInfo.length; i++) {
             for (let j = 0; j < this._cellInfo[i].length; j++) {
                 const index = i * this._cellInfo[i].length + j;
-                offsets[2 * index + 0] = j * cellSize;
-                offsets[2 * index + 1] = i * cellSize;
+                offsets[2 * index + 0] = j * this._cellSize;
+                offsets[2 * index + 1] = i * this._cellSize;
             }
         }
 
@@ -90,7 +90,7 @@ export class BaseRenderPass extends RenderPass {
 
         gl.useProgram(this._program());
 
-        gl.uniform1i(cellSizeUniform, cellSize);
+        gl.uniform1i(cellSizeUniform, this._cellSize);
         gl.uniform2f(resolutionUniform, gl.canvas.width, gl.canvas.height);
 
         gl.drawElementsInstanced(gl.TRIANGLES, 6, gl.UNSIGNED_SHORT, 0, numCells);

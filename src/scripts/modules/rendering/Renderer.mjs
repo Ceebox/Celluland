@@ -9,7 +9,7 @@ export class Renderer {
 
     #currentCellInfo = null;
 
-    constructor(canvas) {
+    constructor(canvas, cellSize) {
         const gl = canvas.getContext("webgl2", {
             desynchronized: true,
             antialias: false,
@@ -26,7 +26,7 @@ export class Renderer {
 
         this.#shaderManager = new ShaderManager(gl);
         this._renderPassManager = new RenderPassManager(this.#shaderManager);
-        this._renderPassManager.addRenderPass(new BaseRenderPass(gl));
+        this._renderPassManager.addRenderPass(new BaseRenderPass(gl, cellSize));
     }
 
     render(timestamp) {
