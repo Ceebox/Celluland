@@ -7,7 +7,25 @@ export class Cell {
         this._cellInfo = new CellInfo(row, column, state);
         this._nextCellInfo = null;
         this._strategy = `
-        return cell.phase % 2 === 0 ? 0 + cell.x % 2 == 0 ? 1 : 0 : 1;
+
+        if (cell.phase == 0) {
+            return Math.random() < 0.5 ? 1 : 0; // Randomly set state to 0 or 1
+        }
+
+        const neighbours = cell.getNeighbours();
+        if (neighbours < 2) {
+            return cell.state;
+        }
+
+        if (neighbours > 3) {
+            return 0;
+        }
+
+        if (cell.state == 0 && neighbours == 3) {
+            return 1;
+        }
+
+        return cell.state;
         `;
     }
 
