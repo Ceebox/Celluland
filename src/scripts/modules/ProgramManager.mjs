@@ -122,7 +122,7 @@ export class ProgramManager {
             this._renderer.render();
         });
 
-        this._spector.captureCanvas(this._canvas).then((result) => {
+        this._spector.captureCanvas(this._canvas)?.then((result) => {
             const resultView = new SPECTOR.ResultView(spector);
             resultView.display(result);
             this._spector.hideUI();
