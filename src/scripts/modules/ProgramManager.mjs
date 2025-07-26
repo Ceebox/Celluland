@@ -6,6 +6,7 @@ export class ProgramManager {
 
     /**
      * @param {HTMLCanvasElement} canvas 
+     * @param {Object} config
      */
     constructor(canvas, config) {
 
