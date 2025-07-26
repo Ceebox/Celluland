@@ -14,7 +14,7 @@ export class Cell {
 
         const neighbours = cell.getNeighbours();
         if (neighbours < 2) {
-            return cell.state;
+            return 0;
         }
 
         if (neighbours > 3) {

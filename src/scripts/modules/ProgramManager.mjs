@@ -37,8 +37,8 @@ export class ProgramManager {
         this._inputManager = new InputManager(canvas);
         this._renderer = new Renderer(canvas, this._cellSize);
 
-        // Produce the first frame (even though we are paused)
-        this.#updateCore();
+        // Render an empty frame
+        this._renderer.setCellInfo(this._cellManager.getCellInfo());
         this._renderer.render();
 
         this.handlePause = this.handlePause.bind(this);
