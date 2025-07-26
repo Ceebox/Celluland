@@ -14,6 +14,7 @@ export class ProgramManager {
         this._paused = true;
         this._fps = 4;
         this._canvas = canvas;
+        this._simulateNextFrame = true;
 
         // I'm doing most of this offline, we probably don't have spector
         if (typeof SPECTOR === "undefined") {
@@ -57,7 +58,23 @@ export class ProgramManager {
         this._renderer.render();
     }
 
+    update() {
+        if (this._paused) {
+            return;
+        }
+
+        if (this._simulateNextFrame) {
+            this._cellManager.updateCells();
+            this._cellManager.getCellInfo().forEach(row => {
+                row.forEach(cell => cell.simulate());
+            });
+        }
+
+        this._renderer.setCellInfo(this._cellManager.getCellInfo());
+    }
+
     _animationFrameRequested(timestamp) {
+        this.update();
         this.render();
 
         if (this._paused) {
@@ -75,6 +92,7 @@ export class ProgramManager {
     handlePause(event) {
         if (event.key === " ") {
             this._paused = !this._paused;
+            this._simulateNextFrame = this._paused;
             if (!this._paused) {
                 requestAnimationFrame(this._animationFrameRequested);
             }

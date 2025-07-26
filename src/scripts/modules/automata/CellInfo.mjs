@@ -1,4 +1,4 @@
-export default class CellInfo {
+export class CellInfo {
     
     constructor(rowCount, columnCount, state = 0) {
         this.rowCount = rowCount;
