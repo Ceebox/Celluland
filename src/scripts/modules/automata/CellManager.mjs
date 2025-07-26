@@ -1,4 +1,5 @@
 import { Cell } from "./Cell.mjs";
+import { StrategyController } from "./StrategyController.mjs";
 
 export class CellManager {
 
@@ -8,23 +9,27 @@ export class CellManager {
         this._rowCount = rowCount;
         this._columnCount = columnCount;
 
+        this._strategyController = new StrategyController(this);
+
         // Initialize cells with default values
         for (let i = 0; i < this._rowCount; i++) {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
-                this.#cells[i][j] = new Cell(i, j, 0);
+                this.#cells[i][j] = new Cell(i, j, 0.2);
             }
         }
     }
 
-    updateCells(newStates) {
-        if (newStates.length !== this._rowCount || newStates[0].length !== this._columnCount) {
-            throw new Error("New states do not match the dimensions of the cell grid.");
+    updateCells() {
+        for (let i = 0; i < this._rowCount; i++) {
+            for (let j = 0; j < this._columnCount; j++) {
+                this._strategyController.simulateCell(this.#cells[i][j]);
+            }
         }
 
         for (let i = 0; i < this._rowCount; i++) {
             for (let j = 0; j < this._columnCount; j++) {
-                // this.#cells[i][j] = newStates[i][j];
+                this.#cells[i][j].advance();
             }
         }
     }

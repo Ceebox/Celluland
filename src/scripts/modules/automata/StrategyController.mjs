@@ -9,6 +9,10 @@ export class StrategyController {
         this.renderPass.updateCellInfo(this.cellManager.getCellInfo());
     }
 
+    simulateCell(cell) {
+        cell.simulate();
+    }
+
     getCellInfo() {
         return this.cellManager.getCellInfo();
     }

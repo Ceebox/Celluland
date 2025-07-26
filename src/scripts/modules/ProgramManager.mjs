@@ -65,9 +65,6 @@ export class ProgramManager {
 
         if (this._simulateNextFrame) {
             this._cellManager.updateCells();
-            this._cellManager.getCellInfo().forEach(row => {
-                row.forEach(cell => cell.simulate());
-            });
         }
 
         this._renderer.setCellInfo(this._cellManager.getCellInfo());
@@ -92,7 +89,7 @@ export class ProgramManager {
     handlePause(event) {
         if (event.key === " ") {
             this._paused = !this._paused;
-            this._simulateNextFrame = this._paused;
+            this._simulateNextFrame = !this._paused;
             if (!this._paused) {
                 requestAnimationFrame(this._animationFrameRequested);
             }

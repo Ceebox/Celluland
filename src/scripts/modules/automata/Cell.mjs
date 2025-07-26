@@ -5,7 +5,7 @@ export class Cell {
     constructor(row, column, state = 0) {
         this._cellInfo = new CellInfo(row, column, state);
         this._nextCellInfo = null;
-        this._strategy = "return 1;";
+        this._strategy = "return Math.random();";
     }
 
     /**
@@ -42,7 +42,7 @@ export class Cell {
     }
 
     executeStrategy() {
-        const result = eval(this._strategy);
+        const result = new Function(this._strategy)();
         if (typeof result !== "number") {
             throw new Error("Strategy must return a number representing the new state.");
         }
