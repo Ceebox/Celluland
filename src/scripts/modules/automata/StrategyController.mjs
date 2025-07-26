@@ -13,12 +13,19 @@ export class StrategyController {
         cell.simulate(this);
     }
 
-    getApi() {
-        return "";
+    createApi(strategy) {
+        const api = {
+        };
+
+        return new Function('api', `
+            return (function() {
+                ${strategy}
+            })();
+        `).bind(null, api);
     }
 
     executeStrategy(strategy) {
-        const result = new Function(this.getApi(), strategy)();
+        const result = this.createApi(strategy)();
         if (typeof result !== "number") {
             throw new Error("Strategy must return a number representing the new state.");
         }
