@@ -17,11 +17,15 @@ export class ProgramManager {
         this._simulateNextFrame = true;
 
         // I'm doing most of this offline, we probably don't have spector
-        if (typeof SPECTOR === "undefined") {
-            console.warn("SPECTOR has not been loaded correctly.");
-        } else {
+        this._isDebug = typeof SPECTOR !== "undefined";
+        if (this._isDebug) {
             this._spector = new SPECTOR.Spector();
             this._spector.spyCanvases();
+        } else {
+            this._spector = null;
+            if (window.location.href.indexOf("ceebox") !== -1 || window.location.href.indexOf("127.0.0.1") !== -1) {
+                console.warn("SPECTOR has not been loaded correctly.");
+            }
         }
 
         const rowCount = Math.floor(canvas.height / CELL_SIZE);
@@ -32,7 +36,7 @@ export class ProgramManager {
         this._renderer = new Renderer(canvas);
 
         // Produce the first frame (even though we are paused)
-        this._renderer.setCellInfo(this._cellManager.getCellInfo());
+        this.#updateCore();
         this._renderer.render();
 
         this.handlePause = this.handlePause.bind(this);
@@ -63,6 +67,10 @@ export class ProgramManager {
             return;
         }
 
+        this.#updateCore();
+    }
+
+    #updateCore() {
         if (this._simulateNextFrame) {
             this._cellManager.updateCells();
         }

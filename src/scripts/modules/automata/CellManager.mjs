@@ -15,7 +15,7 @@ export class CellManager {
         for (let i = 0; i < this._rowCount; i++) {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
-                this.#cells[i][j] = new Cell(i, j, 0.2);
+                this.#cells[i][j] = new Cell(i, j, 0);
             }
         }
     }
