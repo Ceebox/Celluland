@@ -1,7 +1,7 @@
 export class StrategyController {
 
     constructor(cellManager) {
-        this.cellManager = cellManager;
+        this._cellManager = cellManager;
     }
 
     updateStrategy(newStates) {
@@ -10,7 +10,20 @@ export class StrategyController {
     }
 
     simulateCell(cell) {
-        cell.simulate();
+        cell.simulate(this);
+    }
+
+    getApi() {
+        return "";
+    }
+
+    executeStrategy(strategy) {
+        const result = new Function(this.getApi(), strategy)();
+        if (typeof result !== "number") {
+            throw new Error("Strategy must return a number representing the new state.");
+        }
+
+        return result;
     }
 
     getCellInfo() {
