@@ -12,7 +12,24 @@ export function Run() {
     canvas.height = 400;
     cellulandParent.appendChild(canvas);
 
-    const programManager = new ProgramManager(canvas);
+    const configScript = document.getElementById("cellulandConfig");
+    let config = {};
+    if (configScript === null) {
+        // Use the default config
+        config = {
+            paused: true,
+            fps: 4
+        };
+    }
+    else {
+        try {
+            config = JSON.parse(configScript.textContent);
+        } catch (e) {
+            console.error("Failed to parse Celluland configuration:", e);
+        }
+    }
+
+    const programManager = new ProgramManager(canvas, config);
 }
 
 window.addEventListener("load", () => {

@@ -7,12 +7,12 @@ export class ProgramManager {
     /**
      * @param {HTMLCanvasElement} canvas 
      */
-    constructor(canvas) {
+    constructor(canvas, config) {
 
         const CELL_SIZE = 8;
 
-        this._paused = true;
-        this._fps = 4;
+        this._paused = config.paused !== undefined ? config.paused : true;
+        this._fps = config.fps !== undefined ? config.fps : 4;
         this._canvas = canvas;
         this._simulateNextFrame = true;
 
