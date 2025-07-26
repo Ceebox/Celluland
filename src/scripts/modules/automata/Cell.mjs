@@ -6,7 +6,7 @@ export class Cell {
     constructor(row, column, state = 0) {
         this._cellInfo = new CellInfo(row, column, state);
         this._nextCellInfo = null;
-        this._strategy = "return Math.random();";
+        this._strategy = "return Math.random() < 0.5 ? 1 : 0;";
     }
 
     /**
