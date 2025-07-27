@@ -7,10 +7,13 @@ export function Run() {
         return;
     }
 
+    const parentContainer = document.createElement("div");
+    cellulandParent.appendChild(parentContainer);
+
     const canvas = document.createElement("canvas");
     canvas.width = 400;
     canvas.height = 400;
-    cellulandParent.appendChild(canvas);
+    parentContainer.appendChild(canvas);
 
     const configScript = document.getElementById("cellulandConfig");
     let config = {};
