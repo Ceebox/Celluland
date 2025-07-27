@@ -10,10 +10,14 @@ export class ProgramManager {
      */
     constructor(canvas, config) {
 
-        this._paused = config.paused !== undefined ? config.paused : true;
-        this._fps = config.fps !== undefined ? config.fps : 4;
-        this._editable = config.editable !== undefined ? config.editable : false;
-        this._cellSize = config.cellSize !== undefined ? config.cellSize : 8;
+        this._config = config
+
+        this._paused = this._config.paused !== undefined ? this._config.paused : true;
+        this._fps = this._config.fps !== undefined ? this._config.fps : 4;
+        this._editable = this._config.editable !== undefined ? this._config.editable : false;
+        this._cellSize = this._config.cellSize !== undefined ? this._config.cellSize : 8;
+
+        this.#applySettingsToConfig();
 
         this._canvas = canvas;
         this._simulateNextFrame = true;
@@ -160,5 +164,12 @@ export class ProgramManager {
     resetToInitialState() {
         this._cellManager.setToInitialState();
         this.render();
+    }
+
+    #applySettingsToConfig() {
+        this._config._paused = this._paused;
+        this._config._fps = this._fps;
+        this._config._editable = this._editable;
+        this._config._cellSize = this._cellSize;
     }
 }

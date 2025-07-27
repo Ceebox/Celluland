@@ -19,9 +19,10 @@ export class CellManager {
     setToInitialState() {
 
         // TODO: Support setting up the whole board
+        const initialLength = this._initialState.length;
         let initialStateValue = 0;
-        if (this._initialState.length > 0) {
-            if (this._initialState.length === 1) {
+        if (initialLength > 0) {
+            if (initialLength === 1) {
                 initialStateValue = this._initialState[0];
             }
         }
@@ -30,7 +31,14 @@ export class CellManager {
         for (let i = 0; i < this._rowCount; i++) {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
+                if (initialLength > 1) {
+                    initialStateValue = this._initialState[i][j];
+                } else {
+                    this._initialState[i] = [];
+                }
+
                 this.#cells[i][j] = new Cell(i, j, initialStateValue);
+                this._initialState[i][j] = initialStateValue;
             }
         }
     }
@@ -71,6 +79,9 @@ export class CellManager {
         }
 
         this.#cells[row][column] = new Cell(row, column, state);
+        if (this.#phase == 0) {
+            this._initialState[row][column] = state;
+        }
     }
 
     /**
