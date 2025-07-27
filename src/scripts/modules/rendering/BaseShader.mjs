@@ -16,7 +16,8 @@ void main() {
     // Scale and offset
     vec2 pos = iPosition * vec2(uCellSize, uCellSize) + iOffset;
     gl_Position = vec4(
-        (pos / uResolution) * 2.0 - 1.0,
+        (pos.x / uResolution.x) * 2.0 - 1.0,
+        1.0 - (pos.y / uResolution.y) * 2.0,
         0,
         1
     );

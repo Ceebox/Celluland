@@ -37,6 +37,28 @@ export class CellManager {
         this.#phase++;
     }
 
+    getCell(row, column) {
+        if (row < 0 || row >= this._rowCount || column < 0
+            || column >= this._columnCount) {
+            throw new Error("Cell coordinates out of bounds");
+        }
+        return this.#cells[row][column];
+    }
+
+    // I guess technically this can be called from the API, but probably don't?
+    setCell(row, column, state) {
+        if (row < 0 || row >= this._rowCount || column < 0
+            || column >= this._columnCount) {
+            throw new Error("Cell coordinates out of bounds");
+        }
+
+        if (typeof state !== "number") {
+            throw new Error("State must be a number");
+        }
+
+        this.#cells[row][column] = new Cell(row, column, state);
+    }
+
     /**
      * Get the amount of neighbours of a cell
      * @param {*} row The row of the cell

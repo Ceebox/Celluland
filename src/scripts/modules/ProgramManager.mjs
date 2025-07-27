@@ -34,14 +34,18 @@ export class ProgramManager {
         const columnCount = Math.floor(canvas.width / this._cellSize);
 
         this._cellManager = new CellManager(rowCount, columnCount);
-        this._inputManager = new InputManager(canvas);
+        this._inputManager = new InputManager(canvas, this._cellSize);
         this._renderer = new Renderer(canvas, this._cellSize);
 
         this.togglePause = this.togglePause.bind(this);
         this.runDebug = this.runDebug.bind(this);
+        this.drawCell = this.drawCell.bind(this);
+        this.removeCell = this.removeCell.bind(this);
 
         this._inputManager.onKeyDown(" ", this.togglePause);
         this._inputManager.onKeyDown("/", this.runDebug);
+        this._inputManager.onMouseButtonDownRepeat(0, this.drawCell);
+        this._inputManager.onMouseButtonDownRepeat(2, this.removeCell);
 
         // Render an empty frame
         this._renderer.setCellInfo(this._cellManager.getCellInfo());
@@ -123,5 +127,31 @@ export class ProgramManager {
         }).catch((error) => {
             console.error("Failed to capture canvas:", error);
         });
+    }
+
+    drawCell() {
+        if (!this._editable) {
+            return;
+        }
+
+        const mousePos = this._inputManager._mousePosition;
+        const cell = this._cellManager.getCell(mousePos.x, mousePos.y);
+        if (cell) {
+            this._cellManager.setCell(cell.getColumn(), cell.getRow(), 1);
+            this.render();
+        }
+    }
+
+    removeCell() {
+        if (!this._editable) {
+            return;
+        }
+
+        const mousePos = this._inputManager._mousePosition;
+        const cell = this._cellManager.getCell(mousePos.x, mousePos.y);
+        if (cell) {
+            this._cellManager.setCell(cell.getColumn(), cell.getRow(), 0);
+            this.render();
+        }
     }
 }

@@ -8,10 +8,6 @@ export class Cell {
         this._nextCellInfo = null;
         this._strategy = `
 
-        if (cell.phase == 0) {
-            return Math.random() < 0.5 ? 1 : 0; // Randomly set state to 0 or 1
-        }
-
         const neighbours = cell.getNeighbours();
         if (neighbours < 2) {
             return 0;
