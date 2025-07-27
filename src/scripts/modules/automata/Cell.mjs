@@ -60,9 +60,9 @@ export class Cell {
     /**
      * @param {StrategyController} strategyController 
      */
-    simulate(strategyController, phase) {
+    simulate(strategyController) {
         if (this._strategy !== null) {
-            const newState = strategyController.executeStrategy(this, phase);
+            const newState = strategyController.executeStrategy(this);
             this._nextCellInfo = new CellInfo(this._cellInfo.rowCount, this._cellInfo.columnCount, newState);
         } else {
             throw new Error("No strategy set for this cell.");

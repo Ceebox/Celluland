@@ -24,7 +24,7 @@ export class CellManager {
     updateCells() {
         for (let i = 0; i < this._rowCount; i++) {
             for (let j = 0; j < this._columnCount; j++) {
-                this._strategyController.simulateCell(this.#cells[i][j], this.#phase);
+                this._strategyController.simulateCell(this.#cells[i][j]);
             }
         }
 
@@ -61,6 +61,10 @@ export class CellManager {
         }
 
         return neighbours.length;
+    }
+
+    getPhase() {
+        return this.#phase;
     }
 
     getCellInfo() {
