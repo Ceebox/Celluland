@@ -1,4 +1,5 @@
 import { BaseShader } from "./BaseShader.mjs";
+import { COLOURS } from "./Colours.mjs";
 import { RenderPass } from "./RenderPass.mjs";
 
 export class BaseRenderPass extends RenderPass {
@@ -64,11 +65,12 @@ export class BaseRenderPass extends RenderPass {
             for (let j = 0; j < this._cellInfo[i].length; j++) {
                 const index = i * this._cellInfo[i].length + j;
                 const state = this._cellInfo[i][j].getState();
+                const colour = COLOURS.getColour(state);
 
-                colours[4 * index + 0] = state; // R
-                colours[4 * index + 1] = state; // G
-                colours[4 * index + 2] = state; // B
-                colours[4 * index + 3] = 1.0;   // A
+                colours[4 * index + 0] = colour.r;
+                colours[4 * index + 1] = colour.g;
+                colours[4 * index + 2] = colour.b;
+                colours[4 * index + 3] = 1.0;
             }
         }
 

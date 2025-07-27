@@ -6,17 +6,31 @@ export class CellManager {
     #cells = [];
     #phase = 0;
 
-    constructor(rowCount, columnCount) {
+    constructor(rowCount, columnCount, initialState = []) {
         this._rowCount = rowCount;
         this._columnCount = columnCount;
+        this._initialState = initialState;
 
         this._strategyController = new StrategyController(this);
+
+        this.setToInitialState();
+    }
+
+    setToInitialState() {
+
+        // TODO: Support setting up the whole board
+        let initialStateValue = 0;
+        if (this._initialState.length > 0) {
+            if (this._initialState.length === 1) {
+                initialStateValue = this._initialState[0];
+            }
+        }
 
         // Initialize cells with default values
         for (let i = 0; i < this._rowCount; i++) {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
-                this.#cells[i][j] = new Cell(i, j, 0);
+                this.#cells[i][j] = new Cell(i, j, initialStateValue);
             }
         }
     }

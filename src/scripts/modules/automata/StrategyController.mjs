@@ -1,3 +1,4 @@
+import { COLOURS } from "../rendering/Colours.mjs";
 import { Cell } from "./Cell.mjs";
 
 export class StrategyController {
@@ -41,6 +42,16 @@ export class StrategyController {
      */
     executeStrategy(cell) {
         const result = this.createApi(cell, cell.getStrategy())();
+
+        if (typeof result === "string") {
+            const colourToInt = COLOURS.getColourIndex(result);
+            if (colourToInt !== null) {
+                return colourToInt;
+            } else {
+                throw new Error(`Invalid colour name: ${result}`);
+            }
+        }
+
         if (typeof result !== "number") {
             throw new Error("Strategy must return a number representing the new state.");
         }
