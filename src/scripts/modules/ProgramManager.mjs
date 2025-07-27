@@ -41,9 +41,11 @@ export class ProgramManager {
         this.runDebug = this.runDebug.bind(this);
         this.drawCell = this.drawCell.bind(this);
         this.removeCell = this.removeCell.bind(this);
+        this.resetToInitialState = this.resetToInitialState.bind(this);
 
         this._inputManager.onKeyDown(" ", this.togglePause);
         this._inputManager.onKeyDown("/", this.runDebug);
+        this._inputManager.onKeyDown("r", this.resetToInitialState)
         this._inputManager.onMouseButtonDownRepeat(0, this.drawCell);
         this._inputManager.onMouseButtonDownRepeat(2, this.removeCell);
 
@@ -153,5 +155,10 @@ export class ProgramManager {
             this._cellManager.setCell(cell.getColumn(), cell.getRow(), 0);
             this.render();
         }
+    }
+
+    resetToInitialState() {
+        this._cellManager.setToInitialState();
+        this.render();
     }
 }
