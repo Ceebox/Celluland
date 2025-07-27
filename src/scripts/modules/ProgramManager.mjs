@@ -37,18 +37,17 @@ export class ProgramManager {
         this._inputManager = new InputManager(canvas);
         this._renderer = new Renderer(canvas, this._cellSize);
 
+        this.togglePause = this.togglePause.bind(this);
+        this.runDebug = this.runDebug.bind(this);
+
+        this._inputManager.onKeyDown(" ", this.togglePause);
+        this._inputManager.onKeyDown("/", this.runDebug);
+
         // Render an empty frame
         this._renderer.setCellInfo(this._cellManager.getCellInfo());
         this._renderer.render();
 
-        this.handlePause = this.handlePause.bind(this);
-        this.handleDebug = this.handleDebug.bind(this);
         this._animationFrameRequested = this._animationFrameRequested.bind(this);
-
-        window.addEventListener("keydown", (event) => {
-            this.handlePause(event);
-            this.handleDebug(event);
-        });
 
         if (!this._paused) {
             this.start();
@@ -69,6 +68,7 @@ export class ProgramManager {
     }
 
     update() {
+
         if (this._paused) {
             return;
         }
@@ -100,21 +100,15 @@ export class ProgramManager {
         );
     }
 
-    handlePause(event) {
-        if (event.key === " ") {
-            this._paused = !this._paused;
-            this._simulateNextFrame = !this._paused;
-            if (!this._paused) {
-                requestAnimationFrame(this._animationFrameRequested);
-            }
+    togglePause() {
+        this._paused = !this._paused;
+        this._simulateNextFrame = !this._paused;
+        if (!this._paused) {
+            requestAnimationFrame(this._animationFrameRequested);
         }
     }
 
-    handleDebug(event) {
-        if (event.key !== "/") {
-            return;
-        }
-
+    runDebug() {
         this._spector.displayUI();
 
         // Render a frame first
