@@ -61,18 +61,8 @@ export class CellulandUI {
         }
 
         this.uiContainer.appendChild(
-            createLabeledInput("Presets:", this.exampleSelect),
+            createLabeledInput("Presets:", this.exampleSelect)
         );
-
-        // When dropdown changes, populate the textarea with the selected example
-        this.exampleSelect.addEventListener("change", () => {
-            const selectedName = this.exampleSelect.value;
-            if (selectedName && EXAMPLES.hasOwnProperty(selectedName)) {
-                this.setScript(EXAMPLES[selectedName]);
-            } else {
-                this.setScript("");
-            }
-        });
 
         this.scriptBox = document.createElement("textarea");
         this.scriptBox.rows = 10;
@@ -82,10 +72,19 @@ export class CellulandUI {
         this.scriptBox.style.width = "100%";
         this.uiContainer.appendChild(createLabeledInput("Celluland Script:", this.scriptBox));
 
-        this.runScriptBtn = document.createElement("button");
-        this.runScriptBtn.textContent = "Run Script";
-        this.runScriptBtn.style.marginBottom = "10px";
-        this.uiContainer.appendChild(this.runScriptBtn);
+        this.scriptBox.addEventListener("change", () => {
+            this.programManager.setScript(this.scriptBox.value);
+        });
+
+        this.exampleSelect.addEventListener("change", () => {
+            const selectedName = this.exampleSelect.value;
+            let newScript = "";
+            if (selectedName && EXAMPLES.hasOwnProperty(selectedName)) {
+                newScript = EXAMPLES[selectedName];
+            } 
+            
+            this.setScript(newScript);
+        });
 
         // Control inputs:
         this.pausedInput = document.createElement("input");
@@ -139,10 +138,6 @@ export class CellulandUI {
             this.config.editable = this.isEditableInput.checked;
             this.updateConfig();
         });
-
-        this.runScriptBtn.addEventListener("click", () => {
-            this.programManager.setScript(this.scriptBox.value);
-        });
     }
 
     updateConfig() {
@@ -151,6 +146,7 @@ export class CellulandUI {
 
     setScript(text) {
         this.scriptBox.value = text;
+        this.programManager.setScript(this.scriptBox.value);
     }
 
     getScript() {
