@@ -14,16 +14,9 @@
 <body>
     <main>
         <h1>Celluland</h1>
-          <script type="application/json" data-celluland-config data-celluland-id="0">
-            {
-                "paused": true,
-                "editable": true,
-                "cellSize": 8,
-                "fps": 5
-            }
-            </script>
-        <script data-celluland data-celluland-id="0" type="module" src="./scripts/CreateCellulandViewer.mjs" async></script>
-        <aside></aside>
+        <div id="editor">
+            <script data-celluland-editor data-celluland-id="0" type="module" src="./scripts/CreateCellulandEditor.mjs" async></script>
+        </div>
     </main>
 </body>
 

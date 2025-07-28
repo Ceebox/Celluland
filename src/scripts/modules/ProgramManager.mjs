@@ -12,11 +12,7 @@ export class ProgramManager {
 
         this._config = config
 
-        this._paused = this._config.paused !== undefined ? this._config.paused : true;
-        this._fps = this._config.fps !== undefined ? this._config.fps : 4;
-        this._editable = this._config.editable !== undefined ? this._config.editable : false;
-        this._cellSize = this._config.cellSize !== undefined ? this._config.cellSize : 8;
-
+        this.applyConfig(config)
         this.#applySettingsToConfig();
 
         this._canvas = canvas;
@@ -164,6 +160,13 @@ export class ProgramManager {
     resetToInitialState() {
         this._cellManager.setToInitialState();
         this.render();
+    }
+
+    applyConfig() {
+        this._paused = this._config.paused !== undefined ? this._config.paused : true;
+        this._fps = this._config.fps !== undefined ? this._config.fps : 4;
+        this._editable = this._config.editable !== undefined ? this._config.editable : false;
+        this._cellSize = this._config.cellSize !== undefined ? this._config.cellSize : 8;
     }
 
     #applySettingsToConfig() {
