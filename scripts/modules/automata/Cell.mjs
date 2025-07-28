@@ -33,7 +33,7 @@ export class Cell {
     }
 
     getStrategy() {
-        return this._strategy || "return 0;";
+        return this._strategy || "return cell.state;";
     }
 
     setStrategy(text) {

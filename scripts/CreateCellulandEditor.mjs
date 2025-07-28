@@ -147,6 +147,12 @@ export class CellulandUI {
     setScript(text) {
         this.scriptBox.value = text;
         this.programManager.setScript(this.scriptBox.value);
+
+        if (this.programManager.isPaused()) {
+            this.programManager.togglePause();
+        }
+
+        this.programManager.applyConfig();
     }
 
     getScript() {

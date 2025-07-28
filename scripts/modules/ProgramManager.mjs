@@ -112,6 +112,10 @@ export class ProgramManager {
         );
     }
 
+    isPaused() {
+        return this._paused;
+    }
+
     togglePause() {
         this._paused = !this._paused;
         this._simulateNextFrame = !this._paused;
@@ -172,11 +176,25 @@ export class ProgramManager {
         this.render();
     }
 
+    resizeGrid() {
+        this._cellManager.resize();
+        this.render();
+    }
+
     applyConfig() {
+        const oldCellSize = this._cellSize;
+
         this._paused = this._config.paused !== undefined ? this._config.paused : true;
         this._fps = this._config.fps !== undefined ? this._config.fps : 4;
         this._editable = this._config.editable !== undefined ? this._config.editable : false;
         this._cellSize = this._config.cellSize !== undefined ? this._config.cellSize : 8;
+
+        if (this._cellSize !== oldCellSize) {
+            // Stop this being called before we have everything
+            if (this.programManager) {
+                this.resizeGrid();
+            }
+        }
     }
 
     #applySettingsToConfig() {

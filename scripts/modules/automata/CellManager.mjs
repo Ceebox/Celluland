@@ -51,6 +51,39 @@ export class CellManager {
         }
     }
 
+    resize(newRowCount, newColumnCount) {
+        this._rowCount = newRowCount;
+        this._columnCount = newColumnCount;
+
+        const initialLength = this._initialState.length;
+        let initialStateValue = 0;
+        if (initialLength > 0) {
+            if (initialLength === 1) {
+                initialStateValue = this._initialState[0];
+            }
+        }
+
+        for (let i = 0; i < this._rowCount; i++) {
+
+            if (!this.#cells[i]) {
+                this.#cells[i] = [];
+            }
+
+            for (let j = 0; j < this._columnCount; j++) {
+                if (initialLength > 1) {
+                    initialStateValue = this._initialState[i][j];
+                } else {
+                    this._initialState[i] = [];
+                }
+
+                if (!this.#cells[i][j]) {
+                    this.#cells[i][j] = new Cell(i, j, initialStateValue);
+                    this._initialState[i][j] = initialStateValue;
+                }
+            }
+        }
+    }
+
     updateCells() {
         for (let i = 0; i < this._rowCount; i++) {
             for (let j = 0; j < this._columnCount; j++) {
@@ -70,7 +103,7 @@ export class CellManager {
     getCell(row, column) {
         if (row < 0 || row >= this._rowCount || column < 0
             || column >= this._columnCount) {
-                return null;
+            return null;
         }
         return this.#cells[row][column];
     }

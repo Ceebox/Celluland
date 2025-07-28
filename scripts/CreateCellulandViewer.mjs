@@ -39,9 +39,8 @@ window.addEventListener("load", () => {
       console.warn("data-celluland-id missing for a script tag; skipping.");
       return;
     }
-    const id = idStr.trim();
-
-    const configScript = document.querySelector(`script[data-celluland-config][data-celluland-id="${id}"], [data-celluland-config][data-celluland-id="${id}"]`);
+    const dataId = idStr.trim();
+    const configScript = document.querySelector(`script[data-celluland-config][data-celluland-id="${dataId}"], [data-celluland-config][data-celluland-id="${dataId}"]`);
 
     // Default config
     let config = { paused: true, fps: 4, editable: false, cellSize: 8 };
@@ -52,10 +51,10 @@ window.addEventListener("load", () => {
       if (parsedConfig) {
         config = parsedConfig;
       } else {
-        console.warn(`Invalid JSON in config for Celluland instance with id ${id}`);
+        console.warn(`Invalid JSON in config for Celluland instance with id ${dataId}`);
       }
     } else {
-      console.warn(`No config found for Celluland instance with id ${id}, using default config.`);
+      console.warn(`No config found for Celluland instance with id ${dataId}, using default config.`);
     }
 
     Run(config, script);
