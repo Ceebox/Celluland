@@ -49,7 +49,7 @@ export class CellulandUI {
         this.scriptBox = document.createElement("textarea");
         this.scriptBox.rows = 10;
         this.scriptBox.cols = 30;
-        this.scriptBox.placeholder = "Enter your script/input for Celluland here...";
+        this.scriptBox.placeholder = "Enter your code here...";
         this.scriptBox.style.fontFamily = "monospace";
         this.scriptBox.style.width = "100%";
         this.uiContainer.appendChild(createLabeledInput("Celluland Script:", this.scriptBox));

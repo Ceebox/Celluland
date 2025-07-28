@@ -1,0 +1,53 @@
+html {
+    color-scheme: light dark;
+
+    --background: #1a1a1a;
+    --font-colour: #fafafa;
+
+    @media (prefers-color-scheme: light) {
+        --background: #fafafa;
+        --font-colour: #1a1a1a;
+    }
+
+    color: var(--font-colour);
+    background-color: var(--background);
+
+    /* Background image */
+    opacity: 1;
+    background-image: radial-gradient(var(--font-colour) 0.7000000000000001px, var(--background) 0.7000000000000001px);
+    background-size: 1em 1em;
+
+    /* Give it a fancy position and make it stick when scrolling */
+    background-position: center;
+    background-attachment: fixed;
+}
+
+body {
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+textarea {
+    resize: none;
+    width: 100%;
+    box-sizing: border-box;
+    height: 100%;
+}
+
+canvas {
+    border-radius: 3px;
+}
+
+.bg-blue {
+    background-color: #7777ee;
+}
+
+.block {
+    border-radius: 15px;
+    padding: 1em;
+    margin: 0.25em;
+    display: inline-block;
+    min-width: 0px;
+}
