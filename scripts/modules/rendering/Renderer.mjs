@@ -40,7 +40,6 @@ export class Renderer {
 
         this.#currentCellInfo = cellInfo;
         const pass = this._renderPassManager.getRenderPass(BaseRenderPass.prototype.constructor.name); 
-        console.log(pass);
         
         pass.setCellInfo(cellInfo);
     }

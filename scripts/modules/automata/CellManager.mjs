@@ -43,6 +43,14 @@ export class CellManager {
         }
     }
 
+    setScript(text) {
+        for (let i = 0; i < this._rowCount; i++) {
+            for (let j = 0; j < this._columnCount; j++) {
+                this.#cells[i][j].setStrategy(text);
+            }
+        }
+    }
+
     updateCells() {
         for (let i = 0; i < this._rowCount; i++) {
             for (let j = 0; j < this._columnCount; j++) {
@@ -62,7 +70,7 @@ export class CellManager {
     getCell(row, column) {
         if (row < 0 || row >= this._rowCount || column < 0
             || column >= this._columnCount) {
-            throw new Error("Cell coordinates out of bounds");
+                return null;
         }
         return this.#cells[row][column];
     }
@@ -78,7 +86,7 @@ export class CellManager {
             throw new Error("State must be a number");
         }
 
-        this.#cells[row][column] = new Cell(row, column, state);
+        this.#cells[row][column].setState(state);
         if (this.#phase == 0) {
             this._initialState[row][column] = state;
         }

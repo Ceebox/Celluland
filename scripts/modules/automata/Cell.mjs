@@ -6,23 +6,7 @@ export class Cell {
     constructor(row, column, state = 0) {
         this._cellInfo = new CellInfo(row, column, state);
         this._nextCellInfo = null;
-        this._strategy = `
-
-        const neighbours = cell.getNeighbours();
-        if (neighbours < 2) {
-            return 0;
-        }
-
-        if (neighbours > 3) {
-            return 0;
-        }
-
-        if (cell.state == 0 && neighbours == 3) {
-            return 1;
-        }
-
-        return cell.state;
-        `;
+        this._strategy = null;
     }
 
     /**
@@ -44,8 +28,16 @@ export class Cell {
         return this._cellInfo.state;
     }
 
+    setState(state) {
+        this._cellInfo.state = state;
+    }
+
     getStrategy() {
-        return this._strategy;
+        return this._strategy || "return 0;";
+    }
+
+    setStrategy(text) {
+        this._strategy = text;
     }
 
     advance() {

@@ -10,13 +10,19 @@ export class ProgramManager {
      */
     constructor(canvas, config) {
 
-        this._config = config
+        this._config = config;
+        this._currentState = 1;
 
-        this.applyConfig(config)
+        this.applyConfig(config);
         this.#applySettingsToConfig();
 
         this._canvas = canvas;
         this._simulateNextFrame = true;
+
+        // Right click keeps making context menus
+        canvas.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+        });
 
         // I'm doing most of this offline, we probably don't have spector
         this._isDebug = typeof SPECTOR !== "undefined";
@@ -114,6 +120,10 @@ export class ProgramManager {
         }
     }
 
+    setScript(script) {
+        this._cellManager.setScript(script);
+    }
+
     runDebug() {
         this._spector.displayUI();
 
@@ -139,7 +149,7 @@ export class ProgramManager {
         const mousePos = this._inputManager._mousePosition;
         const cell = this._cellManager.getCell(mousePos.x, mousePos.y);
         if (cell) {
-            this._cellManager.setCell(cell.getColumn(), cell.getRow(), 1);
+            this._cellManager.setCell(cell.getColumn(), cell.getRow(), this._currentState);
             this.render();
         }
     }

@@ -1,3 +1,4 @@
+import { EXAMPLES } from "./modules/automata/Examples.mjs";
 import { ProgramManager } from "./modules/ProgramManager.mjs";
 
 // A helper function to create labeled controls
@@ -45,6 +46,33 @@ export class CellulandUI {
         this.uiContainer.style.marginLeft = "10px";
         this.uiContainer.style.minWidth = "250px";
         this.container.appendChild(this.uiContainer);
+
+        this.exampleSelect = document.createElement("select");
+        const defaultOption = document.createElement("option");
+        defaultOption.textContent = "Not Selected";
+        defaultOption.value = "";
+        this.exampleSelect.appendChild(defaultOption);
+
+        for (const [name, script] of Object.entries(EXAMPLES)) {
+            const option = document.createElement("option");
+            option.value = name;
+            option.textContent = name;
+            this.exampleSelect.appendChild(option);
+        }
+
+        this.uiContainer.appendChild(
+            createLabeledInput("Presets:", this.exampleSelect),
+        );
+
+        // When dropdown changes, populate the textarea with the selected example
+        this.exampleSelect.addEventListener("change", () => {
+            const selectedName = this.exampleSelect.value;
+            if (selectedName && EXAMPLES.hasOwnProperty(selectedName)) {
+                this.setScript(EXAMPLES[selectedName]);
+            } else {
+                this.setScript("");
+            }
+        });
 
         this.scriptBox = document.createElement("textarea");
         this.scriptBox.rows = 10;
@@ -113,7 +141,7 @@ export class CellulandUI {
         });
 
         this.runScriptBtn.addEventListener("click", () => {
-            // TODO: Script loading from doc
+            this.programManager.setScript(this.scriptBox.value);
         });
     }
 
@@ -121,7 +149,6 @@ export class CellulandUI {
         this.programManager.applyConfig(this.config);
     }
 
-    // Optionally expose methods to externally set/get config and script content
     setScript(text) {
         this.scriptBox.value = text;
     }
