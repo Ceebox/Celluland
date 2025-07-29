@@ -61,7 +61,7 @@ export class CellulandUI {
         }
 
         this.uiContainer.appendChild(
-            createLabeledInput("Presets:", this.exampleSelect)
+            createLabeledInput("Preset:", this.exampleSelect)
         );
 
         this.scriptBox = document.createElement("textarea");
@@ -70,7 +70,7 @@ export class CellulandUI {
         this.scriptBox.placeholder = "Enter your code here...";
         this.scriptBox.style.fontFamily = "monospace";
         this.scriptBox.style.width = "100%";
-        this.uiContainer.appendChild(createLabeledInput("Celluland Script:", this.scriptBox));
+        this.uiContainer.appendChild(createLabeledInput("Algorithm:", this.scriptBox));
 
         this.scriptBox.addEventListener("change", () => {
             this.programManager.setScript(this.scriptBox.value);
