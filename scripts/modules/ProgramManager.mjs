@@ -177,6 +177,7 @@ export class ProgramManager {
     }
 
     resetGrid() {
+        this._cellManager.resetPhase();
         this._cellManager.clearInitialState();
         this._cellManager.setToInitialState();
         this.render();
