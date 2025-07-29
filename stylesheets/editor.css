@@ -23,10 +23,10 @@ html {
 }
 
 body {
-
     display: flex;
     justify-content: center;
     align-items: center;
+    text-align: justify;
 }
 
 textarea {
@@ -40,8 +40,20 @@ canvas {
     border-radius: 3px;
 }
 
+code {
+    font-family: "Monospace";
+}
+
 .bg-blue {
     background-color: #7777ee;
+}
+
+.bg-green {
+    background-color: #77ee77;
+}
+
+.bg-red {
+    background-color: #ee7777;
 }
 
 .block {
@@ -50,4 +62,5 @@ canvas {
     margin: 0.25em;
     display: inline-block;
     min-width: 0px;
+    width: 90%;
 }

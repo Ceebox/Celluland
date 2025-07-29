@@ -87,15 +87,24 @@ export class CellulandUI {
         });
 
         // Control inputs:
-        this.pausedInput = document.createElement("input");
-        this.pausedInput.type = "button";
-        this.pausedInput.value = this.programManager.isPaused() ? "Play" : "Pause";
-        this.pausedInput.checked = this.config.paused;
-        this.uiContainer.appendChild(this.pausedInput);
+        this.pauseButton = document.createElement("input");
+        this.pauseButton.type = "button";
+        this.pauseButton.value = this.programManager.isPaused() ? "Play" : "Pause";
+        this.pauseButton.checked = this.config.paused;
+        this.uiContainer.appendChild(this.pauseButton);
 
-        this.pausedInput.addEventListener("click", () => {
-            this.pausedInput.value = this.programManager.isPaused() ? "Play" : "Pause";
+        this.pauseButton.addEventListener("click", () => {
             this.programManager.togglePause();
+            this.pauseButton.value = this.programManager.isPaused() ? "Play" : "Pause";
+        });
+
+        this.resetButton = document.createElement("input");
+        this.resetButton.type = "button";
+        this.resetButton.value = "Reset";
+        this.uiContainer.appendChild(this.resetButton);
+
+        this.resetButton.addEventListener("click", () => {
+            this.programManager.resetGrid();
         });
 
         this.fpsInput = document.createElement("input");
@@ -117,8 +126,8 @@ export class CellulandUI {
         this.isEditableInput.checked = this.config.editable;
         this.uiContainer.appendChild(createLabeledInput("Is Editable:", this.isEditableInput));
 
-        this.pausedInput.addEventListener("change", () => {
-            this.config.paused = this.pausedInput.checked;
+        this.pauseButton.addEventListener("change", () => {
+            this.config.paused = this.pauseButton.checked;
             this.updateConfig();
         });
 

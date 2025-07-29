@@ -1,4 +1,5 @@
 import { Cell } from "./Cell.mjs";
+import { DIRECTION } from "./Direction.mjs";
 import { StrategyController } from "./StrategyController.mjs";
 
 export class CellManager {
@@ -14,6 +15,10 @@ export class CellManager {
         this._strategyController = new StrategyController(this);
 
         this.setToInitialState();
+    }
+
+    clearInitialState() {
+        this._initialState = [];
     }
 
     setToInitialState() {
@@ -106,6 +111,65 @@ export class CellManager {
             return null;
         }
         return this.#cells[row][column];
+    }
+
+    /**
+     * @param {Cell} initialCell 
+     * @param {Direction} direction 
+     */
+    getCellFromDirection(initialCell, direction) {
+        let x = initialCell.getColumn();
+        let y = initialCell.getRow();
+
+        switch (direction) {
+            case (DIRECTION.TOP_LEFT):
+                x -= 1;
+                y -= 1;
+            case (DIRECTION.TOP_MIDDLE):
+                y -= 1;
+            case (DIRECTION.TOP_RIGHT):
+                x += 1;
+                y -= 1;
+            case (DIRECTION.CENTRE_LEFT):
+                x -= 1;
+            case (DIRECTION.CENTRE_MIDDLE):
+                break;
+            case (DIRECTION.CENTRE_RIGHT):
+                x += 1;
+            case (DIRECTION.BOTTOM_LEFT):
+                x -= 1;
+                y += 1;
+            case (DIRECTION.BOTTOM_MIDDLE):
+                y += 1;
+            case (DIRECTION.BOTTOM_RIGHT):
+                x += 1;
+                y += 1;    
+            default:
+                break;
+        }
+
+        if (x >= this.#cells.length) {
+            x = 0;
+        }
+
+        if (x < 0) {
+            x = this.#cells.length - 1;
+        }
+
+        if (y >= this.#cells[x].length) {
+            y = 0;
+        }
+
+        if (y < 0) {
+            y = this.#cells[x].length - 1;
+        }
+
+        const cell = this.#cells[x][y];
+        if (!cell) {
+            throw new Error(`Cell does not exist at: ${x}, ${y}`);
+        }
+
+        return cell.getState();
     }
 
     // I guess technically this can be called from the API, but probably don't?

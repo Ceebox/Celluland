@@ -1,0 +1,11 @@
+export const DIRECTION = {
+    TOP_LEFT: 0,
+    TOP_MIDDLE: 1,
+    TOP_RIGHT: 2,
+    CENTRE_LEFT: 3,
+    CENTRE_MIDDLE: 4,
+    CENTRE_RIGHT: 5,
+    BOTTOM_LEFT: 6,
+    BOTTOM_MIDDLE: 7,
+    BOTTOM_RIGHT: 8,
+}

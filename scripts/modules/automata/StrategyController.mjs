@@ -1,5 +1,6 @@
 import { COLOURS } from "../rendering/Colours.mjs";
 import { Cell } from "./Cell.mjs";
+import { DIRECTION } from "./Direction.mjs";
 
 export class StrategyController {
 
@@ -27,15 +28,21 @@ export class StrategyController {
                     currentCell.getColumn()
                 );
             },
+            // Maybe rename this
+            getCell(direction) {
+                return cellManager.getCellFromDirection(
+                    currentCell,
+                    direction
+                );
+            }
         };
 
-        const colours = COLOURS;
-
-        return new Function("cell", "colours", `
+        return new Function("cell", "colours", "direction", `
+            \`use strict\`
             return (function() {
                 ${strategy}
             })();
-        `).bind(null, cellApi, colours);
+        `).bind(null, cellApi, COLOURS, DIRECTION);
     }
 
     /**
