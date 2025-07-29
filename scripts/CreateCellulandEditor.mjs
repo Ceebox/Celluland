@@ -105,6 +105,7 @@ export class CellulandUI {
 
         this.resetButton.addEventListener("click", () => {
             this.programManager.resetGrid();
+            this.programManager.setScript(this.scriptBox.value);
         });
 
         this.fpsInput = document.createElement("input");
@@ -177,6 +178,5 @@ export class CellulandUI {
 
 window.addEventListener("load", () => {
     const container = document.querySelector("script[data-celluland-editor]").parentElement;
-
     const cellulandUI = new CellulandUI(container, { paused: true, fps: 10, cellSize: 16, editable: true });
 });

@@ -22,10 +22,11 @@ export class StrategyController {
             x : currentCell.getColumn(),
             y : currentCell.getRow(),
             state : currentCell.getState(),
-            getNeighbours() {
+            getNeighbours(state = 1) {
                 return cellManager.getNeighbours(
                     currentCell.getRow(),
-                    currentCell.getColumn()
+                    currentCell.getColumn(),
+                    state
                 );
             },
             // Maybe rename this
