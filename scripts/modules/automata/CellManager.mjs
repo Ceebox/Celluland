@@ -125,25 +125,33 @@ export class CellManager {
             case (DIRECTION.TOP_LEFT):
                 x -= 1;
                 y -= 1;
+                break;
             case (DIRECTION.TOP_MIDDLE):
                 y -= 1;
+                break;
             case (DIRECTION.TOP_RIGHT):
                 x += 1;
                 y -= 1;
+                break;
             case (DIRECTION.CENTRE_LEFT):
                 x -= 1;
+                break;
             case (DIRECTION.CENTRE_MIDDLE):
                 break;
             case (DIRECTION.CENTRE_RIGHT):
                 x += 1;
+                break;
             case (DIRECTION.BOTTOM_LEFT):
                 x -= 1;
                 y += 1;
+                break;
             case (DIRECTION.BOTTOM_MIDDLE):
                 y += 1;
+                break;
             case (DIRECTION.BOTTOM_RIGHT):
                 x += 1;
-                y += 1;    
+                y += 1;
+                break;
             default:
                 break;
         }

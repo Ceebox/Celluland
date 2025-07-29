@@ -60,8 +60,10 @@ export class StrategyController {
                 throw new Error(`Invalid colour name: ${result}`);
             }
         }
-
-        if (typeof result !== "number") {
+        else if (typeof result === "boolean") {
+            return result ? 1 : 0;
+        }
+        else if (typeof result !== "number") {
             throw new Error("Strategy must return a number representing the new state.");
         }
 

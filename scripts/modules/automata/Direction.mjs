@@ -8,4 +8,9 @@ export const DIRECTION = {
     BOTTOM_LEFT: 6,
     BOTTOM_MIDDLE: 7,
     BOTTOM_RIGHT: 8,
+    LEFT: 3,
+    CENTRE: 4,
+    RIGHT: 5,
+    ABOVE: 1,
+    BELOW: 7,
 }
