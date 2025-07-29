@@ -73,6 +73,7 @@ canvas {
     padding: 1em;
     min-width: 0px;
     width: 90%;
+    display: inline-block;
     border-color: var(--font-colour);
     border-width: 0.25em;
     border-style: solid;
