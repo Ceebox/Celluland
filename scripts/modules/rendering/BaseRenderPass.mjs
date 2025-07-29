@@ -101,4 +101,8 @@ export class BaseRenderPass extends RenderPass {
     setCellInfo(cellInfo) {
         this._cellInfo = cellInfo;
     }
+
+    setCellSize(newCellSize) {
+        this._cellSize = newCellSize;
+    }
 }

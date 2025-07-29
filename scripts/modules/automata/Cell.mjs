@@ -53,7 +53,8 @@ export class Cell {
             const newState = strategyController.executeStrategy(this);
             this._nextCellInfo = new CellInfo(this._cellInfo.rowCount, this._cellInfo.columnCount, newState);
         } else {
-            throw new Error("No strategy set for this cell.");
+            // throw new Error("No strategy set for this cell.");
+            this._nextCellInfo = new CellInfo(this._cellInfo.rowCount, this._cellInfo.columnCount, this._cellInfo.state);
         }
     }
 }

@@ -19,6 +19,8 @@ export class ProgramManager {
         this._canvas = canvas;
         this._simulateNextFrame = true;
 
+        this._pausedChangedCallbacks = new Map();
+
         // Right click keeps making context menus
         canvas.addEventListener('contextmenu', (event) => {
             event.preventDefault();
@@ -66,13 +68,21 @@ export class ProgramManager {
         }
     }
 
+    onPauseChanged(obj, callback) {
+        this._pausedChangedCallbacks.set(obj, callback);
+    }
+
+    offPauseChanged(obj) {
+        this._pausedChangedCallbacks.delete(obj);
+    }
+
     start() {
-        this._paused = false;
+        this.setPause(false);
         requestAnimationFrame(this._animationFrameRequested);
     }
 
     pause() {
-        this._paused = true;
+        this.setPause(true);
     }
 
     render() {
@@ -117,10 +127,17 @@ export class ProgramManager {
     }
 
     togglePause() {
-        this._paused = !this._paused;
+        this.setPause(!this._paused);
         this._simulateNextFrame = !this._paused;
         if (!this._paused) {
             requestAnimationFrame(this._animationFrameRequested);
+        }
+    }
+
+    setPause(value) {
+        this._paused = value;
+        for (const callback of this._pausedChangedCallbacks.values()) {
+            callback();
         }
     }
 
@@ -184,12 +201,19 @@ export class ProgramManager {
     }
 
     resizeGrid() {
-        this._cellManager.resize();
+        const rowCount = Math.floor(this._canvas.height / this._cellSize);
+        const columnCount = Math.floor(this._canvas.width / this._cellSize);
+        this._cellManager.resize(rowCount, columnCount);
         this.render();
     }
 
-    applyConfig() {
+    applyConfig(newConfig) {
         const oldCellSize = this._cellSize;
+        this._config = newConfig;
+
+        if (this._paused === undefined) {
+            this._paused = this._config.paused;
+        }
 
         this._fps = this._config.fps !== undefined ? this._config.fps : 4;
         this._editable = this._config.editable !== undefined ? this._config.editable : false;
@@ -197,9 +221,13 @@ export class ProgramManager {
 
         if (this._cellSize !== oldCellSize) {
             // Stop this being called before we have everything
-            if (this.programManager) {
-                this.resizeGrid();
+            if (!this._canvas) {
+                return;
             }
+
+            this._renderer.setCellSize(this._cellSize);
+            this._inputManager.setCellSize(this._cellSize);
+            this.resizeGrid();
         }
     }
 

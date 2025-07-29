@@ -8,8 +8,12 @@ export class Renderer {
     _renderPassManager = null;
 
     #currentCellInfo = null;
+    #cellSize = null;
 
     constructor(canvas, cellSize) {
+        
+        this.#cellSize = cellSize;
+
         const gl = canvas.getContext("webgl2", {
             desynchronized: true,
             antialias: false,
@@ -29,7 +33,7 @@ export class Renderer {
         // This probably ain't gonna happen (at least for a while)
         this.#shaderManager = new ShaderManager(gl);
         this._renderPassManager = new RenderPassManager(this.#shaderManager);
-        this._renderPassManager.addRenderPass(new BaseRenderPass(gl, cellSize));
+        this._renderPassManager.addRenderPass(new BaseRenderPass(gl, this.#cellSize));
     }
 
     render(timestamp) {
@@ -45,5 +49,11 @@ export class Renderer {
         const pass = this._renderPassManager.getRenderPass(BaseRenderPass.prototype.constructor.name); 
         
         pass.setCellInfo(cellInfo);
+    }
+
+    setCellSize(newCellSize) {
+        this.#cellSize = newCellSize;
+        const pass = this._renderPassManager.getRenderPass(BaseRenderPass.prototype.constructor.name);
+        pass.setCellSize(newCellSize);
     }
 }

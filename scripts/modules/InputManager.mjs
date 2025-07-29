@@ -109,4 +109,8 @@ export class InputManager {
     getMousePosition() {
         return { ...this._mousePosition };
     }
+
+    setCellSize(newCellSize) {
+        this._cellSize = newCellSize;
+    }
 }

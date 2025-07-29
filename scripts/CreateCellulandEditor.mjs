@@ -32,7 +32,7 @@ export class CellulandUI {
         this.viewerContainer.appendChild(this.canvas);
 
         this.config = {
-            paused: false,
+            paused: true,
             fps: 4,
             cellSize: 8,
             editable: true,
@@ -40,6 +40,7 @@ export class CellulandUI {
         };
 
         this.programManager = new ProgramManager(this.canvas, this.config);
+        this.updateConfig();
 
         // Create UI controls container
         this.uiContainer = document.createElement("div");
@@ -95,6 +96,10 @@ export class CellulandUI {
 
         this.pauseButton.addEventListener("click", () => {
             this.programManager.togglePause();
+        });
+
+        // Other things can change this value so listen to what the event listener says!
+        this.programManager.onPauseChanged(this.pauseButton, () => {
             this.pauseButton.value = this.programManager.isPaused() ? "Play" : "Pause";
         });
 

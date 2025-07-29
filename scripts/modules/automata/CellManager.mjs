@@ -72,6 +72,8 @@ export class CellManager {
 
             if (!this.#cells[i]) {
                 this.#cells[i] = [];
+            } else if (this._columnCount < this.#cells[i].length - 1) {
+                this.#cells = this.#cells.slice(0, this.#cells.length - 1);
             }
 
             for (let j = 0; j < this._columnCount; j++) {
@@ -86,6 +88,10 @@ export class CellManager {
                     this._initialState[i][j] = initialStateValue;
                 }
             }
+        }
+
+        if (this._rowCount < this.#cells.length - 1) {
+            this.#cells = this.#cells.slice(0, this.#cells.length - 1);
         }
     }
 
