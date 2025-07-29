@@ -40,7 +40,7 @@ canvas {
     border-radius: 3px;
 }
 
-code {
+.doc-heading {
     font-family: "Monospace";
 }
 
@@ -58,9 +58,25 @@ code {
 
 .block {
     border-radius: 15px;
-    padding: 1em;
+    padding: 1.25em;
     margin: 0.25em;
     display: inline-block;
+    box-sizing: content-box;
     min-width: 0px;
     width: 90%;
+    border-color: var(--font-colour);
+    border-width: 0.25em;
+    border-style: solid;
+}
+
+.inner-block {
+    border-radius: 15px;
+    padding: 1em;
+    min-width: 0px;
+    width: 90%;
+    border-color: var(--font-colour);
+    border-width: 0.25em;
+    border-style: solid;
+    -webkit-backdrop-filter: saturate(125%);
+    backdrop-filter: saturate(125%);
 }
