@@ -88,9 +88,15 @@ export class CellulandUI {
 
         // Control inputs:
         this.pausedInput = document.createElement("input");
-        this.pausedInput.type = "checkbox";
+        this.pausedInput.type = "button";
+        this.pausedInput.value = this.programManager.isPaused() ? "Play" : "Pause";
         this.pausedInput.checked = this.config.paused;
-        this.uiContainer.appendChild(createLabeledInput("Paused:", this.pausedInput));
+        this.uiContainer.appendChild(this.pausedInput);
+
+        this.pausedInput.addEventListener("click", () => {
+            this.pausedInput.value = this.programManager.isPaused() ? "Play" : "Pause";
+            this.programManager.togglePause();
+        });
 
         this.fpsInput = document.createElement("input");
         this.fpsInput.type = "number";

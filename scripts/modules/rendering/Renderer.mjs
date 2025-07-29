@@ -24,6 +24,9 @@ export class Renderer {
             throw new Error("WebGL 2 is not supported by this browser.");
         }
 
+        // The idea here was that there was going to be multiple render passes
+        // (Bloom, etc)
+        // This probably ain't gonna happen (at least for a while)
         this.#shaderManager = new ShaderManager(gl);
         this._renderPassManager = new RenderPassManager(this.#shaderManager);
         this._renderPassManager.addRenderPass(new BaseRenderPass(gl, cellSize));
