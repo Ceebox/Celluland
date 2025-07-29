@@ -8,7 +8,7 @@ if (neighbours > 3) {
 }
 
 if (cell.state == 0 && neighbours == 3) {
-    return 1;
+    return colours.WHITE;
 }
 
 return cell.state;

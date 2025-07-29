@@ -29,11 +29,13 @@ export class StrategyController {
             },
         };
 
-        return new Function("cell", `
+        const colours = COLOURS;
+
+        return new Function("cell", "colours", `
             return (function() {
                 ${strategy}
             })();
-        `).bind(null, cellApi);
+        `).bind(null, cellApi, colours);
     }
 
     /**

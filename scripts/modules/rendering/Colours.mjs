@@ -28,10 +28,9 @@ export const COLOURS = {
     CYAN: 9,
     PINK: 10,
     GRAY: 11,
-    WHITE: 12,
-    BROWN: 13,
-    DARK_GREEN: 14,
-    NAVY_BLUE: 15,
+    BROWN: 12,
+    DARK_GREEN: 13,
+    NAVY_BLUE: 14,
 
     getColourIndex(colourString) {
         const index = this[colourString.toUpperCase()];
