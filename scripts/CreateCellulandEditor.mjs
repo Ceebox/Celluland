@@ -15,7 +15,16 @@ function createLabeledInput(labelText, inputElem) {
 }
 
 export class CellulandUI {
+    /**
+     * @param {HTMLElement} parentElement
+     */
     constructor(parentElement, initialConfig = {}) {
+
+        if (!parentElement) {
+            console.error("No parent element supplied to Celluland");
+            return;
+        }
+
         this.parent = parentElement;
 
         this.container = document.createElement("div");
@@ -82,8 +91,8 @@ export class CellulandUI {
             let newScript = "";
             if (selectedName && EXAMPLES.hasOwnProperty(selectedName)) {
                 newScript = EXAMPLES[selectedName];
-            } 
-            
+            }
+
             this.setScript(newScript);
         });
 
@@ -117,14 +126,14 @@ export class CellulandUI {
         this.fpsInput.type = "number";
         this.fpsInput.min = 1;
         this.fpsInput.max = 60;
-        this.fpsInput.value = this.config.fps;
+        this.fpsInput.value = this.config.fps.toString();
         this.uiContainer.appendChild(createLabeledInput("FPS:", this.fpsInput));
 
         this.cellSizeInput = document.createElement("input");
         this.cellSizeInput.type = "number";
         this.cellSizeInput.min = 1;
         this.cellSizeInput.max = 100;
-        this.cellSizeInput.value = this.config.cellSize;
+        this.cellSizeInput.value = this.config.cellSize.toString();
         this.uiContainer.appendChild(createLabeledInput("Cell Size:", this.cellSizeInput));
 
         this.isEditableInput = document.createElement("input");
@@ -141,7 +150,7 @@ export class CellulandUI {
             let fps = parseInt(this.fpsInput.value, 10);
             if (fps < 1) fps = 1;
             if (fps > 60) fps = 60;
-            this.fpsInput.value = fps;
+            this.fpsInput.value = fps.toString();
             this.config.fps = fps;
             this.updateConfig();
         });
@@ -150,7 +159,7 @@ export class CellulandUI {
             let cellSize = parseInt(this.cellSizeInput.value, 10);
             if (cellSize < 1) cellSize = 1;
             if (cellSize > 100) cellSize = 100;
-            this.cellSizeInput.value = cellSize;
+            this.cellSizeInput.value = cellSize.toString();
             this.config.cellSize = cellSize;
             this.updateConfig();
         });
@@ -165,6 +174,9 @@ export class CellulandUI {
         this.programManager.applyConfig(this.config);
     }
 
+    /**
+     * @param {string} text
+     */
     setScript(text) {
         this.scriptBox.value = text;
         this.programManager.setScript(this.scriptBox.value);
@@ -177,6 +189,6 @@ export class CellulandUI {
 }
 
 window.addEventListener("load", () => {
-    const container = document.querySelector("script[data-celluland-editor]").parentElement;
-    const cellulandUI = new CellulandUI(container, { paused: true, fps: 10, cellSize: 16, editable: true });
+    const container = document.querySelector("script[data-celluland-editor]")?.parentElement;
+    const cellulandUI = new CellulandUI(container, { paused: true, fps: 4, cellSize: 16, editable: true });
 });
