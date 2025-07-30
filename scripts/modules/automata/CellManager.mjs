@@ -4,6 +4,13 @@ import { StrategyController } from "./StrategyController.mjs";
 
 export class CellManager {
 
+    /**
+     * @type {any[]}
+     */
+    #initialState = [];
+    /**
+     * @type {any[]}
+     */
     #cells = [];
     #phase = 0;
 
@@ -14,25 +21,29 @@ export class CellManager {
     constructor(rowCount, columnCount, initialState = []) {
         this._rowCount = rowCount;
         this._columnCount = columnCount;
-        this._initialState = initialState;
+        this.#initialState = initialState;
 
         this._strategyController = new StrategyController(this);
 
         this.setToInitialState();
     }
 
+    getInitialState() {
+        return this.#initialState;
+    }
+
     clearInitialState() {
-        this._initialState = [];
+        this.initialState = [];
     }
 
     setToInitialState() {
 
         // TODO: Support setting up the whole board
-        const initialLength = this._initialState.length;
+        const initialLength = this.#initialState.length;
         let initialStateValue = 0;
         if (initialLength > 0) {
             if (initialLength === 1) {
-                initialStateValue = this._initialState[0];
+                initialStateValue = this.#initialState[0];
             }
         }
 
@@ -41,13 +52,13 @@ export class CellManager {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
                 if (initialLength > 1) {
-                    initialStateValue = this._initialState[i][j];
+                    initialStateValue = this.#initialState[i][j];
                 } else {
-                    this._initialState[i] = [];
+                    this.#initialState[i] = [];
                 }
 
                 this.#cells[i][j] = new Cell(i, j, initialStateValue);
-                this._initialState[i][j] = initialStateValue;
+                this.#initialState[i][j] = initialStateValue;
             }
         }
     }
@@ -71,11 +82,11 @@ export class CellManager {
         this._rowCount = newRowCount;
         this._columnCount = newColumnCount;
 
-        const initialLength = this._initialState.length;
+        const initialLength = this.#initialState.length;
         let initialStateValue = 0;
         if (initialLength > 0) {
             if (initialLength === 1) {
-                initialStateValue = this._initialState[0];
+                initialStateValue = this.#initialState[0];
             }
         }
 
@@ -91,16 +102,16 @@ export class CellManager {
             // Populate this with the initial state table
             for (let j = 0; j < this._columnCount; j++) {
                 if (initialLength > 1) {
-                    let row = this._initialState[i];
+                    let row = this.#initialState[i];
                     if (row) {
-                        let column = this._initialState[i][j];
+                        let column = this.#initialState[i][j];
                         if (column) {
                             initialStateValue = column;
                         }
                     }
 
                 } else {
-                    this._initialState[i] = [];
+                    this.#initialState[i] = [];
                 }
 
                 // TODO: Fix this, it seems to end up splatting our colour around the page
@@ -110,7 +121,7 @@ export class CellManager {
 
                 if (this.#cells[i].length > j) {
                     this.#cells[i][j] = new Cell(i, j, initialStateValue);
-                    this._initialState[i][j] = initialStateValue;
+                    this.#initialState[i][j] = initialStateValue;
                 }
             }
         }
@@ -234,7 +245,7 @@ export class CellManager {
 
         this.#cells[row][column].setState(state);
         if (this.#phase == 0) {
-            this._initialState[row][column] = state;
+            this.#initialState[row][column] = state;
         }
     }
 

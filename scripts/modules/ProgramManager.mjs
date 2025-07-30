@@ -188,6 +188,10 @@ export class ProgramManager {
         }
     }
 
+    getInitialState() {
+        return this._cellManager.getInitialState();
+    }
+
     resetToInitialState() {
         this._cellManager.setToInitialState();
         this.render();

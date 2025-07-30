@@ -168,6 +168,7 @@ export class CellulandUI {
     updateConfig() {
         this.programManager.applyConfig(this.config);
         this.updateEmbedConfig();
+        this.updateInitialState();
     }
 
     updateEmbedConfig() {
@@ -177,6 +178,16 @@ export class CellulandUI {
         }
 
         insertSpan.innerText = JSON.stringify(this.config, null, "\t");
+    }
+
+    updateInitialState() {
+        const initalStateSpan = document.getElementById("embed-state");
+        if (!initalStateSpan) {
+            return;
+        }
+
+        // console.log(JSON.parse())
+        initalStateSpan.innerText = JSON.stringify(this.programManager.getInitialState());
     }
 
     /**
