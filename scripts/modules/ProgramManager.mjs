@@ -232,9 +232,9 @@ export class ProgramManager {
     }
 
     #applySettingsToConfig() {
-        this._config._paused = this._paused;
-        this._config._fps = this._fps;
-        this._config._editable = this._editable;
-        this._config._cellSize = this._cellSize;
+        this._config.paused = this._paused;
+        this._config.fps = this._fps;
+        this._config.editable = this._editable;
+        this._config.cellSize = this._cellSize;
     }
 }

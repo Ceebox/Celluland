@@ -20,11 +20,6 @@ export class CellulandUI {
      */
     constructor(parentElement, initialConfig = {}) {
 
-        if (!parentElement) {
-            console.error("No parent element supplied to Celluland");
-            return;
-        }
-
         this.parent = parentElement;
 
         this.container = document.createElement("div");
@@ -83,11 +78,11 @@ export class CellulandUI {
         this.uiContainer.appendChild(createLabeledInput("Algorithm:", this.scriptBox));
 
         this.scriptBox.addEventListener("change", () => {
-            this.programManager.setScript(this.scriptBox.value);
+            this.programManager?.setScript(this.scriptBox?.value);
         });
 
         this.exampleSelect.addEventListener("change", () => {
-            const selectedName = this.exampleSelect.value;
+            const selectedName = this.exampleSelect?.value;
             let newScript = "";
             if (selectedName && EXAMPLES.hasOwnProperty(selectedName)) {
                 newScript = EXAMPLES[selectedName];
@@ -104,12 +99,12 @@ export class CellulandUI {
         this.uiContainer.appendChild(this.pauseButton);
 
         this.pauseButton.addEventListener("click", () => {
-            this.programManager.togglePause();
+            this.programManager?.togglePause();
         });
 
         // Other things can change this value so listen to what the event listener says!
         this.programManager.onPauseChanged(this.pauseButton, () => {
-            this.pauseButton.value = this.programManager.isPaused() ? "Play" : "Pause";
+            this.pauseButton.value = this.programManager?.isPaused() ? "Play" : "Pause";
         });
 
         this.resetButton = document.createElement("input");
@@ -118,8 +113,8 @@ export class CellulandUI {
         this.uiContainer.appendChild(this.resetButton);
 
         this.resetButton.addEventListener("click", () => {
-            this.programManager.resetGrid();
-            this.programManager.setScript(this.scriptBox.value);
+            this.programManager?.resetGrid();
+            this.programManager?.setScript(this.scriptBox?.value);
         });
 
         this.fpsInput = document.createElement("input");
@@ -172,6 +167,16 @@ export class CellulandUI {
 
     updateConfig() {
         this.programManager.applyConfig(this.config);
+        this.updateEmbedConfig();
+    }
+
+    updateEmbedConfig() {
+        const insertSpan = document.getElementById("embed-config");
+        if (!insertSpan) {
+            return;
+        }
+
+        insertSpan.innerText = JSON.stringify(this.config, null, "\t");
     }
 
     /**
@@ -189,6 +194,11 @@ export class CellulandUI {
 }
 
 window.addEventListener("load", () => {
-    const container = document.querySelector("script[data-celluland-editor]")?.parentElement;
-    const cellulandUI = new CellulandUI(container, { paused: true, fps: 4, cellSize: 16, editable: true });
+    const root = document.querySelector("script[data-celluland-editor]")?.parentElement;
+    if (!root) {
+        console.error("No parent element supplied to Celluland");
+        return;
+    }
+
+    const cellulandUI = new CellulandUI(root, { paused: true, fps: 4, cellSize: 16, editable: true });
 });

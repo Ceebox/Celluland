@@ -4,6 +4,9 @@ if (!window.CellulandViewers) {
   window.CellulandViewers = new Set();
 }
 
+/**
+ * @param {string} jsonString
+ */
 function parseConfig(jsonString) {
   try {
     return JSON.parse(jsonString);
@@ -13,6 +16,10 @@ function parseConfig(jsonString) {
   }
 }
 
+/**
+ * @param {any} config
+ * @param {Element} script
+ */
 export function Run(config, script) {
   const cellulandParent = script.parentElement;
   if (!cellulandParent) {
@@ -46,7 +53,7 @@ window.addEventListener("load", () => {
     let config = { paused: true, fps: 4, editable: false, cellSize: 8 };
 
     if (configScript) {
-      const configText = configScript.textContent.trim();
+      const configText = configScript.textContent?.trim();
       const parsedConfig = parseConfig(configText);
       if (parsedConfig) {
         config = parsedConfig;
