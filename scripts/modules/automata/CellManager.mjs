@@ -7,6 +7,10 @@ export class CellManager {
     #cells = [];
     #phase = 0;
 
+    /**
+     * @param {number} rowCount
+     * @param {number} columnCount
+     */
     constructor(rowCount, columnCount, initialState = []) {
         this._rowCount = rowCount;
         this._columnCount = columnCount;
@@ -48,6 +52,9 @@ export class CellManager {
         }
     }
 
+    /**
+     * @param {any} text
+     */
     setScript(text) {
         for (let i = 0; i < this._rowCount; i++) {
             for (let j = 0; j < this._columnCount; j++) {
@@ -56,6 +63,10 @@ export class CellManager {
         }
     }
 
+    /**
+     * @param {number} newRowCount
+     * @param {number} newColumnCount
+     */
     resize(newRowCount, newColumnCount) {
         this._rowCount = newRowCount;
         this._columnCount = newColumnCount;
@@ -70,20 +81,34 @@ export class CellManager {
 
         for (let i = 0; i < this._rowCount; i++) {
 
+            // Handle size changing
             if (!this.#cells[i]) {
                 this.#cells[i] = [];
             } else if (this._columnCount < this.#cells[i].length - 1) {
                 this.#cells = this.#cells.slice(0, this.#cells.length - 1);
             }
 
+            // Populate this with the initial state table
             for (let j = 0; j < this._columnCount; j++) {
                 if (initialLength > 1) {
-                    initialStateValue = this._initialState[i][j];
+                    let row = this._initialState[i];
+                    if (row) {
+                        let column = this._initialState[i][j];
+                        if (column) {
+                            initialStateValue = column;
+                        }
+                    }
+
                 } else {
                     this._initialState[i] = [];
                 }
 
-                if (!this.#cells[i][j]) {
+                // TODO: Fix this, it seems to end up splatting our colour around the page
+                if (!this.#cells[i]) {
+                    continue;
+                }
+
+                if (this.#cells[i].length > j) {
                     this.#cells[i][j] = new Cell(i, j, initialStateValue);
                     this._initialState[i][j] = initialStateValue;
                 }
@@ -111,6 +136,10 @@ export class CellManager {
         this.#phase++;
     }
 
+    /**
+     * @param {number} row
+     * @param {number} column
+     */
     getCell(row, column) {
         if (row < 0 || row >= this._rowCount || column < 0
             || column >= this._columnCount) {
@@ -122,7 +151,7 @@ export class CellManager {
 
     /**
      * @param {Cell} initialCell 
-     * @param {Direction} direction 
+     * @param {number | DIRECTION} direction 
      */
     getCellFromDirection(initialCell, direction) {
         let x = initialCell.getColumn();
@@ -187,6 +216,11 @@ export class CellManager {
         return cell.getState();
     }
 
+    /**
+     * @param {number} row
+     * @param {number} column
+     * @param {number} state
+     */
     // I guess technically this can be called from the API, but probably don't?
     setCell(row, column, state) {
         if (row < 0 || row >= this._rowCount || column < 0

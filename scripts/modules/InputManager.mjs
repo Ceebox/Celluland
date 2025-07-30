@@ -1,5 +1,5 @@
 export class InputManager {
-    
+
     /**
      * @param {HTMLCanvasElement} canvas 
      */
@@ -64,8 +64,8 @@ export class InputManager {
 
         document.addEventListener("mousemove", (event) => {
             const bb = this._canvas.getBoundingClientRect();
-            this._mousePosition.x = Math.floor( ((event.clientX - bb.left) / bb.width * this._canvas.width) / this._cellSize );
-            this._mousePosition.y = Math.floor( ((event.clientY - bb.top) / bb.height * this._canvas.height) / cellSize );
+            this._mousePosition.x = Math.floor(((event.clientX - bb.left) / bb.width * this._canvas.width) / this._cellSize);
+            this._mousePosition.y = Math.floor(((event.clientY - bb.top) / bb.height * this._canvas.height) / this._cellSize);
         });
     }
 
