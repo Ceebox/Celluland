@@ -20,7 +20,7 @@ function parseConfig(jsonString) {
  * @param {any} config
  * @param {Element} script
  */
-export function Run(config, script) {
+export function Run(config, script, initialState) {
   const cellulandParent = script.parentElement;
   if (!cellulandParent) {
     console.error("Script tag must be inside a container element.");
@@ -35,11 +35,11 @@ export function Run(config, script) {
   canvas.height = 400;
   parentContainer.appendChild(canvas);
 
-  window.CellulandViewers.add(new ProgramManager(canvas, config));
+  window.CellulandViewers.add(new ProgramManager(canvas, config, initialState));
 }
 
 window.addEventListener("load", () => {
-  const scripts = document.querySelectorAll("script[data-celluland][data-celluland-id]");
+  const scripts = document.querySelectorAll("script[data-celluland-viewer][data-celluland-id]");
   scripts.forEach((script) => {
     const idStr = script.getAttribute("data-celluland-id");
     if (!idStr) {
@@ -64,6 +64,12 @@ window.addEventListener("load", () => {
       console.warn(`No config found for Celluland instance with id ${dataId}, using default config.`);
     }
 
-    Run(config, script);
+    const initialValuesScript = document.querySelector(`script[data-celluland-state][data-celluland-id="${dataId}"], [data-celluland-state][data-celluland-id="${dataId}"]`);
+    let initialState = [];
+    if (initialValuesScript) {
+      initialState = JSON.parse(initialValuesScript.textContent);
+    }
+
+    Run(config, script, initialState);
   });
 });

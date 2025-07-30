@@ -8,7 +8,7 @@ export class ProgramManager {
      * @param {HTMLCanvasElement} canvas 
      * @param {Object} config
      */
-    constructor(canvas, config) {
+    constructor(canvas, config, initialState = []) {
 
         this._config = config;
         this._currentState = 1;
@@ -41,7 +41,7 @@ export class ProgramManager {
         const rowCount = Math.floor(canvas.height / this._cellSize);
         const columnCount = Math.floor(canvas.width / this._cellSize);
 
-        this._cellManager = new CellManager(rowCount, columnCount);
+        this._cellManager = new CellManager(rowCount, columnCount, initialState);
         this._inputManager = new InputManager(canvas, this._cellSize);
         this._renderer = new Renderer(canvas, this._cellSize);
 

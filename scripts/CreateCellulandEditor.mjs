@@ -1,7 +1,10 @@
 import { EXAMPLES } from "./modules/automata/Examples.mjs";
 import { ProgramManager } from "./modules/ProgramManager.mjs";
 
-// A helper function to create labeled controls
+/**
+ * @param {string | null} labelText
+ * @param {HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement} inputElem
+ */
 function createLabeledInput(labelText, inputElem) {
     const wrapper = document.createElement("div");
     wrapper.style.margin = "4px 0";
@@ -186,7 +189,6 @@ export class CellulandUI {
             return;
         }
 
-        // console.log(JSON.parse())
         initalStateSpan.innerText = JSON.stringify(this.programManager.getInitialState());
     }
 

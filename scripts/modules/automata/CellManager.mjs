@@ -57,6 +57,11 @@ export class CellManager {
                     this.#initialState[i] = [];
                 }
 
+                // We need to have a default somewhere
+                if (!initialStateValue) {
+                    initialStateValue = 0;
+                }
+
                 this.#cells[i][j] = new Cell(i, j, initialStateValue);
                 this.#initialState[i][j] = initialStateValue;
             }
