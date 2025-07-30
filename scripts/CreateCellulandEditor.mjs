@@ -82,6 +82,7 @@ export class CellulandUI {
 
         this.scriptBox.addEventListener("change", () => {
             this.programManager?.setScript(this.scriptBox?.value);
+            this.updateEmbedScript();
         });
 
         this.exampleSelect.addEventListener("change", () => {
@@ -198,7 +199,16 @@ export class CellulandUI {
     setScript(text) {
         this.scriptBox.value = text;
         this.programManager.setScript(this.scriptBox.value);
-        this.programManager.applyConfig();
+        this.updateEmbedScript();
+    }
+
+    updateEmbedScript() {
+        const scriptSpan = document.getElementById("embed-script");
+        if (!scriptSpan) {
+            return;
+        }
+
+        scriptSpan.innerText = this.getScript();
     }
 
     getScript() {

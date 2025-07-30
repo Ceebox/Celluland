@@ -10,6 +10,23 @@
     <!-- You use: https://ceebox.github.io/celluland/scripts/CreateCellulandViewer.mjs -->
     <script data-celluland-viewer data-celluland-id="0" type="module"
         src="../scripts/CreateCellulandViewer.mjs"> </script>
+    <script data-celluland-script data-celluland-id="0" type="application/json">
+        const neighbours = cell.getNeighbours();
+        if (neighbours < 2) {
+        return 0;
+        }
+        
+        if (neighbours > 3) {
+        return 0;
+        }
+        
+        if (cell.state == 0 && neighbours == 3) {
+        return colours.WHITE;
+        }
+        
+        return cell.state;
+        
+        </script>
     <script data-celluland-config data-celluland-id="0" type="application/json">
 {
 "paused": false,

@@ -17,8 +17,9 @@ export class CellManager {
     /**
      * @param {number} rowCount
      * @param {number} columnCount
+     * @param {string} script
      */
-    constructor(rowCount, columnCount, initialState = []) {
+    constructor(rowCount, columnCount, script, initialState = []) {
         this._rowCount = rowCount;
         this._columnCount = columnCount;
         this.#initialState = initialState;
@@ -26,6 +27,7 @@ export class CellManager {
         this._strategyController = new StrategyController(this);
 
         this.setToInitialState();
+        this.setScript(script);
     }
 
     getInitialState() {
