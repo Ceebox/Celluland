@@ -8,11 +8,12 @@ import { ProgramManager } from "./modules/ProgramManager.mjs";
  */
 function createLabeledInput(labelText, inputElem) {
     const wrapper = document.createElement("div");
-    wrapper.style.margin = "4px 0";
+    wrapper.classList.add("input-wrapper");
+
     const label = document.createElement("label");
     label.textContent = labelText;
-    label.style.marginRight = "6px";
-    label.style.fontWeight = "bold";
+    label.classList.add("input-label");
+
     wrapper.appendChild(label);
     wrapper.appendChild(inputElem);
     return wrapper;
@@ -27,8 +28,7 @@ export class CellulandUI {
         this.parent = parentElement;
 
         this.container = document.createElement("div");
-        this.container.style.display = "flex";
-        this.container.style.alignItems = "flex-start";
+        this.container.classList.add("celluland-container");
         this.parent.appendChild(this.container);
 
         this.viewerContainer = document.createElement("div");
@@ -52,8 +52,7 @@ export class CellulandUI {
 
         // Create UI controls container
         this.uiContainer = document.createElement("div");
-        this.uiContainer.style.marginLeft = "10px";
-        this.uiContainer.style.minWidth = "250px";
+        this.uiContainer.classList.add("celluland-ui-container");
         this.container.appendChild(this.uiContainer);
 
         this.exampleSelect = document.createElement("select");

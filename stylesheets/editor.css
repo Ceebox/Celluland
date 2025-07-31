@@ -81,3 +81,29 @@ canvas {
     -webkit-backdrop-filter: saturate(125%);
     backdrop-filter: saturate(125%);
 }
+
+.celluland-container {
+    display: flex;
+    align-items: flex-start;
+}
+
+.celluland-ui-container {
+    margin-left: 10px;
+    min-width: 250px;
+}
+
+.input-wrapper {
+    margin: 4px 0px;
+}
+
+.input-label {
+    margin-right: 6px;
+    font-weight: bold;
+    user-select: none;
+}
+
+.celluland-ui-container input[type="button"],
+.celluland-ui-container input[type="number"] {
+    margin: 1em;
+    font-size: 1rem;
+}
