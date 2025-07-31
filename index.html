@@ -45,26 +45,79 @@
             <p>
                 Have a look through some of the presets if you want to get started!
             </p>
+            <p>
+                <strong>Please note that this API is currently in-progress, it will likely change. If you have any
+                    feedback, I'd like to know!</strong>
+            </p>
             <h2>API</h2>
             <div id="api-cell" class="inner-block">
                 <h3 class="doc-heading">Cell</h3>
-                <p>Contains the state of the current cell and also functions for interacting with other cells.</p>
-                <h4 class="doc-heading">cell.state</h4>
-                <p>
-                    The colour of the current cell.
-                </p>
-                <h4 class="doc-heading">cell.x</h4>
-                <p>
-                    The X (horizontal) position of the current cell.
-                </p>
-                <h4 class="doc-heading">cell.y</h4>
-                <p>
-                    The Y (vertical) position of the current cell.
-                </p>
-                <h4 class="doc-heading">cell.phase</h4>
-                <p>
-                    The current iteration count. This can be useful for creating things programmatically.
-                </p>
+                <p>Represents a single cell in the grid, containing its state, position, and utility methods for
+                    neighbor
+                    interaction.</p>
+
+                <h4 class="doc-heading">Properties</h4>
+                <dl>
+                    <dt><code>cell.state</code></dt>
+                    <dd>
+                        <p><strong>Type:</strong> <code>number</code></p>
+                        <p>The current state of the cell, typically indicating its color or status (e.g., alive = 1,
+                            dead = 0).</p>
+                    </dd>
+
+                    <dt><code>cell.x</code></dt>
+                    <dd>
+                        <p><strong>Type:</strong> <code>number</code></p>
+                        <p>The horizontal (column) index of the cell within the grid.</p>
+                    </dd>
+
+                    <dt><code>cell.y</code></dt>
+                    <dd>
+                        <p><strong>Type:</strong> <code>number</code></p>
+                        <p>The vertical (row) index of the cell within the grid.</p>
+                    </dd>
+
+                    <dt><code>cell.phase</code></dt>
+                    <dd>
+                        <p><strong>Type:</strong> <code>number</code></p>
+                        <p>The current simulation iteration or generation count.</p>
+                    </dd>
+                </dl>
+
+                <h4 class="doc-heading">Methods</h4>
+                <dl>
+                    <dt><code>cell.getNeighbours(state = 1)</code></dt>
+                    <dd>
+                        <p><strong>Parameters:</strong></p>
+                        <ul>
+                            <li><code>state</code> (<code>number</code>, optional) — The cell state to match among
+                                neighbors.
+                                Defaults to <code>1</code>.</li>
+                        </ul>
+                        <p><strong>Returns:</strong> <code>number</code> — The count of neighboring cells with the
+                            specified state.
+                        </p>
+                        <p>This method counts all neighbors (up to 8 surrounding cells) that have the given state,
+                            ignoring the cell
+                            itself.</p>
+                    </dd>
+
+                    <dt><code>cell.getCell(direction)</code></dt>
+                    <dd>
+                        <p><strong>Parameters:</strong></p>
+                        <ul>
+                            <li><code>direction</code> (<code>number</code> | <code>direction</code>) — The relative
+                                direction from
+                                the current cell to fetch the neighbor's state (e.g. with direction.LEFT).
+                            </li>
+                        </ul>
+                        <p><strong>Returns:</strong> <code>number</code> — The state of the neighboring cell at the
+                            specified
+                            direction.</p>
+                        <p>Grid edges wrap around (toroidal), so neighbors beyond the boundaries wrap to the opposite
+                            side.</p>
+                    </dd>
+                </dl>
             </div>
             <div id="api-colour" class="inner-block">
                 <h3 class="doc-heading">Colour</h3>
@@ -91,6 +144,29 @@
                 <p>
                     Different colours that can be returned to colour a cell.
                 </p>
+            </div>
+            <div id="api-direction" class="inner-block">
+                <h3 class="doc-heading">Direction</h3>
+                <p>Contains all the possible directions used to locate neighboring cells relative to a given cell.</p>
+                <p><i>NOTE: Some directions are aliases to others for convenience (e.g., <code>LEFT</code> ==
+                        <code>CENTRE_LEFT</code>).</i></p>
+                <h4 class="doc-heading">direction.</h4>
+                <ul>
+                    <li class="doc-heading">TOP_LEFT: 0</li>
+                    <li class="doc-heading">TOP_MIDDLE: 1</li>
+                    <li class="doc-heading">TOP_RIGHT: 2</li>
+                    <li class="doc-heading">CENTRE_LEFT: 3</li>
+                    <li class="doc-heading">CENTRE_MIDDLE: 4</li>
+                    <li class="doc-heading">CENTRE_RIGHT: 5</li>
+                    <li class="doc-heading">BOTTOM_LEFT: 6</li>
+                    <li class="doc-heading">BOTTOM_MIDDLE: 7</li>
+                    <li class="doc-heading">BOTTOM_RIGHT: 8</li>
+                    <li class="doc-heading">LEFT: 3</li>
+                    <li class="doc-heading">CENTRE: 4</li>
+                    <li class="doc-heading">RIGHT: 5</li>
+                    <li class="doc-heading">ABOVE: 1</li>
+                    <li class="doc-heading">BELOW: 7</li>
+                </ul>
             </div>
         </div>
     </main>
