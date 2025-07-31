@@ -251,10 +251,11 @@ export class Editor {
                 const sel = window.getSelection();
                 sel?.removeAllRanges();
                 sel?.addRange(range);
+            }
 
-                for (const callback of this.textChangedCallbacks) {
-                    callback(this.getText());
-                }
+            // It might not have changed, but in our case it does no harm
+            for (const callback of this.textChangedCallbacks) {
+                callback(this.getText());
             }
         })
     };
