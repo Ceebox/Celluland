@@ -31,19 +31,28 @@ export const COLOURS = {
     DARK_GREEN: 12,
     NAVY_BLUE: 13,
 
+    /**
+     * @param {string} colourString
+     */
     getColourIndex(colourString) {
         const index = this[colourString.toUpperCase()];
         return (index !== undefined) ? index : null;
     },
 
+    /**
+     * @param {string | number} nameOrIndex
+     */
     getColour(nameOrIndex) {
         if (typeof nameOrIndex === 'string') {
             const index = this[nameOrIndex.toUpperCase()];
             return (index !== undefined) ? COLOURS_ARRAY[index] : null;
         }
+
         if (typeof nameOrIndex === 'number') {
             return COLOURS_ARRAY[nameOrIndex] || null;
         }
-        return null;
+
+        // I probably shouldn't do this but eh
+        return 0;
     }
 };

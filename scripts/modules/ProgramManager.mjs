@@ -48,15 +48,20 @@ export class ProgramManager {
 
         this.togglePause = this.togglePause.bind(this);
         this.runDebug = this.runDebug.bind(this);
-        this.drawCell = this.drawCell.bind(this);
-        this.removeCell = this.removeCell.bind(this);
         this.resetToInitialState = this.resetToInitialState.bind(this);
 
         this._inputManager.onKeyDown(" ", this.togglePause);
         this._inputManager.onKeyDown("`", this.runDebug);
         this._inputManager.onKeyDown("r", this.resetToInitialState)
-        this._inputManager.onMouseButtonDownRepeat(0, this.drawCell);
-        this._inputManager.onMouseButtonDownRepeat(2, this.removeCell);
+
+        const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|Windows Phone/i.test(navigator.userAgent);
+        if (isMobile) {
+            this._inputManager.onMouseButtonDown(0, this.toggleCell.bind(this));
+            this._inputManager.onMouseButtonDownRepeat(0, this.toggleCell.bind(this));
+        } else {
+            this._inputManager.onMouseButtonDownRepeat(0, this.drawCell.bind(this));
+            this._inputManager.onMouseButtonDownRepeat(2, this.removeCell.bind(this));
+        }
 
         // Render an empty frame
         this._renderer.setCellInfo(this._cellManager.getCellInfo());
@@ -135,6 +140,9 @@ export class ProgramManager {
         }
     }
 
+    /**
+     * @param {boolean} value
+     */
     setPause(value) {
         this._paused = value;
         for (const callback of this._pausedChangedCallbacks.values()) {
@@ -142,6 +150,9 @@ export class ProgramManager {
         }
     }
 
+    /**
+     * @param {string} script
+     */
     setScript(script) {
         this._cellManager.setScript(script);
     }
@@ -176,6 +187,32 @@ export class ProgramManager {
         }
     }
 
+    toggleCell() {
+        if (!this._editable) return;
+
+        const mousePos = this._inputManager.getMousePosition();
+
+        // Debounce to avoid flickering cell
+        if (this._lastToggledCell &&
+            this._lastToggledCell.x === mousePos.x &&
+            this._lastToggledCell.y === mousePos.y) {
+            return;
+        }
+
+        const cell = this._cellManager.getCell(mousePos.x, mousePos.y);
+        if (cell) {
+            // HACK: This should totally not do this yo, why does calling it again fix it?!?!
+            const currentState = this._cellManager.getCell(cell.getColumn(), cell.getRow()).getState();
+            if (currentState != 0) {
+                this._cellManager.setCell(cell.getColumn(), cell.getRow(), 0);
+            } else {
+                this._cellManager.setCell(cell.getColumn(), cell.getRow(), this._currentState);
+            }
+            this.render();
+
+            this._lastToggledCell = { x: mousePos.x, y: mousePos.y, time: Date.now() };
+        }
+    }
     removeCell() {
         if (!this._editable) {
             return;

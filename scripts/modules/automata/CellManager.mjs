@@ -40,7 +40,6 @@ export class CellManager {
 
     setToInitialState() {
 
-        // TODO: Support setting up the whole board
         const initialLength = this.#initialState.length;
         let initialStateValue = 0;
         if (initialLength > 0) {
@@ -53,25 +52,27 @@ export class CellManager {
         for (let i = 0; i < this._rowCount; i++) {
             this.#cells[i] = [];
             for (let j = 0; j < this._columnCount; j++) {
-                if (initialLength > 1) {
+                let initialStateValue = 0;
+                if (initialLength > 1 && this.#initialState[i] && this.#initialState[i][j] !== undefined) {
                     initialStateValue = this.#initialState[i][j];
-                } else {
-                    this.#initialState[i] = [];
-                }
-
-                // We need to have a default somewhere
-                if (!initialStateValue) {
-                    initialStateValue = 0;
+                } else if (initialLength === 1) {
+                    initialStateValue = this.#initialState[0];
                 }
 
                 this.#cells[i][j] = new Cell(i, j, initialStateValue);
+
+                // Store initial state so it doesn't get wiped accidentally
+                if (!this.#initialState[i]) {
+                    this.#initialState[i] = [];
+                }
+
                 this.#initialState[i][j] = initialStateValue;
             }
         }
     }
 
     /**
-     * @param {any} text
+     * @param {string} text
      */
     setScript(text) {
         for (let i = 0; i < this._rowCount; i++) {
@@ -102,8 +103,8 @@ export class CellManager {
             // Handle size changing
             if (!this.#cells[i]) {
                 this.#cells[i] = [];
-            } else if (this._columnCount < this.#cells[i].length - 1) {
-                this.#cells = this.#cells.slice(0, this.#cells.length - 1);
+            } else if (this._columnCount < this.#cells[i].length) {
+                this.#cells[i].length = this._columnCount; // trim columns
             }
 
             // Populate this with the initial state table
@@ -133,8 +134,8 @@ export class CellManager {
             }
         }
 
-        if (this._rowCount < this.#cells.length - 1) {
-            this.#cells = this.#cells.slice(0, this.#cells.length - 1);
+        if (this._rowCount < this.#cells.length) {
+            this.#cells.length = this._rowCount;
         }
     }
 

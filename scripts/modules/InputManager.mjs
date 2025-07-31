@@ -92,7 +92,7 @@ export class InputManager {
     }
 
     /**
-     * @param {string} button
+     * @param {number} button
      * @param {{ (): void; (): void; }} callback
      */
     onMouseButtonDown(button, callback) {
@@ -100,7 +100,7 @@ export class InputManager {
     }
 
     /**
-     * @param {string} button
+     * @param {number} button
      */
     offMouseButtonDown(button) {
         this._mouseDownCallbacks.delete(button);
@@ -115,7 +115,7 @@ export class InputManager {
     }
 
     /**
-     * @param {string} button
+     * @param {number} button
      */
     offMouseButtonDownRepeat(button) {
         this._mouseDownRepeatCallbacks.delete(button);
