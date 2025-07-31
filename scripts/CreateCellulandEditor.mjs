@@ -80,7 +80,7 @@ export class CellulandUI {
         this.codeEditor.classList.add("code-editor");
         this.codeEditor.setAttribute("contenteditable", "true");
         this.codeEditor.setAttribute("spellcheck", "false");
-        this.uiContainer.appendChild(createLabeledInput("Algorithm", this.codeEditor));
+        this.uiContainer.appendChild(createLabeledInput("Algorithm:", this.codeEditor));
         this.editor = new Editor(this.codeEditor);
 
         this.editor.onTextChanged(() => {
