@@ -20,9 +20,19 @@
     font-size: 12px;
     outline: none;
     overflow-y: auto;
-    padding-left: 48px;
+    padding-left: 3rem;
     counter-reset: line;
-    background-color: #232323;
+    background-color: #1a1a1a;
+    resize: vertical;
+    min-height: 120px;
+    border-radius: 8px;
+    font-size: 1rem;
+    border-radius: 6px;
+}
+
+.code-editor:focus {
+    border: 2px solid var(--font-colour);
+    outline: none;
 }
 
 .code-editor div {
