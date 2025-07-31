@@ -1,0 +1,42 @@
+.comment {
+    color: #5f5f5f;
+}
+
+.keyword {
+    color: #ff5976;
+    font-weight: bold;
+}
+
+.string {
+    color: #ffd52b;
+}
+
+.number {
+    color: #d973fc;
+}
+
+.code-editor {
+    font-family: monospace;
+    font-size: 12px;
+    outline: none;
+    overflow-y: auto;
+    padding-left: 48px;
+    counter-reset: line;
+    background-color: #232323;
+}
+
+.code-editor div {
+    display: block;
+    position: relative;
+    white-space: pre-wrap;
+    /* Zero-width space to keep height */
+    content: '\00a0';
+}
+
+.code-editor div::before {
+    content: counter(line);
+    counter-increment: line;
+    position: absolute;
+    right: calc(100% + 16px);
+    opacity: 0.5;
+}

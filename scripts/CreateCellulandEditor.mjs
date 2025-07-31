@@ -1,9 +1,10 @@
 import { EXAMPLES } from "./modules/automata/Examples.mjs";
+import { Editor } from "./modules/editor/CodeEditor.mjs";
 import { ProgramManager } from "./modules/ProgramManager.mjs";
 
 /**
  * @param {string | null} labelText
- * @param {HTMLSelectElement | HTMLTextAreaElement | HTMLInputElement} inputElem
+ * @param {HTMLElement} inputElem
  */
 function createLabeledInput(labelText, inputElem) {
     const wrapper = document.createElement("div");
@@ -72,16 +73,18 @@ export class CellulandUI {
             createLabeledInput("Preset:", this.exampleSelect)
         );
 
-        this.scriptBox = document.createElement("textarea");
-        this.scriptBox.rows = 10;
-        this.scriptBox.cols = 30;
-        this.scriptBox.placeholder = "Enter your code here...";
-        this.scriptBox.style.fontFamily = "monospace";
-        this.scriptBox.style.width = "100%";
-        this.uiContainer.appendChild(createLabeledInput("Algorithm:", this.scriptBox));
+        this.codeEditor = document.createElement("div");
+        const tempDiv = document.createElement("div");
+        tempDiv.innerText = "​"; // Cheeky zero width space to make it render
+        this.codeEditor.appendChild(tempDiv);
+        this.codeEditor.classList.add("code-editor");
+        this.codeEditor.setAttribute("contenteditable", "true");
+        this.codeEditor.setAttribute("spellcheck", "false");
+        this.uiContainer.appendChild(createLabeledInput("Algorithm", this.codeEditor));
+        this.editor = new Editor(this.codeEditor);
 
-        this.scriptBox.addEventListener("change", () => {
-            this.programManager?.setScript(this.scriptBox?.value);
+        this.editor.onTextChanged(() => {
+            this.programManager?.setScript(this.editor.getText());
             this.updateEmbedScript();
         });
 
@@ -118,7 +121,7 @@ export class CellulandUI {
 
         this.resetButton.addEventListener("click", () => {
             this.programManager?.resetGrid();
-            this.programManager?.setScript(this.scriptBox?.value);
+            this.programManager?.setScript(this.getScript());
         });
 
         this.fpsInput = document.createElement("input");
@@ -197,8 +200,8 @@ export class CellulandUI {
      * @param {string} text
      */
     setScript(text) {
-        this.scriptBox.value = text;
-        this.programManager.setScript(this.scriptBox.value);
+        this.editor.setText(text);
+        this.programManager.setScript(this.editor.getText());
         this.updateEmbedScript();
     }
 
@@ -212,7 +215,7 @@ export class CellulandUI {
     }
 
     getScript() {
-        return this.scriptBox.value;
+        return this.editor.getText();
     }
 }
 

@@ -53,7 +53,7 @@ export class ProgramManager {
         this.resetToInitialState = this.resetToInitialState.bind(this);
 
         this._inputManager.onKeyDown(" ", this.togglePause);
-        this._inputManager.onKeyDown("/", this.runDebug);
+        this._inputManager.onKeyDown("`", this.runDebug);
         this._inputManager.onKeyDown("r", this.resetToInitialState)
         this._inputManager.onMouseButtonDownRepeat(0, this.drawCell);
         this._inputManager.onMouseButtonDownRepeat(2, this.removeCell);
@@ -155,7 +155,7 @@ export class ProgramManager {
         });
 
         this._spector.captureCanvas(this._canvas)?.then((result) => {
-            const resultView = new SPECTOR.ResultView(spector);
+            const resultView = new SPECTOR.ResultView(this._spector);
             resultView.display(result);
             this._spector.hideUI();
         }).catch((error) => {
