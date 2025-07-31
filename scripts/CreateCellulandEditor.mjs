@@ -32,6 +32,7 @@ export class CellulandUI {
         this.parent.appendChild(this.container);
 
         this.viewerContainer = document.createElement("div");
+        this.viewerContainer.classList.add("celluland-viewer-container");
         this.container.appendChild(this.viewerContainer);
 
         this.canvas = document.createElement("canvas");
