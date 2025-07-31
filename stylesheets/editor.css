@@ -125,6 +125,27 @@ canvas {
     cursor: pointer;
 }
 
+.celluland-ui-container input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    display: inline-block;
+    width: 1.35em;
+    height: 1.35em;
+    border-radius: 6px;
+    background-color: var(--background);
+    vertical-align: middle;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.10);
+    transition: background-color 0.2s, border-color 0.2s, box-shadow 0.2s;
+    position: relative;
+}
+
+.celluland-ui-container input[type="checkbox"]:checked {
+    background-color: var(--font-colour);
+}
+
 .bg-blue {
     background-color: #5a6cff;
     color: white;
