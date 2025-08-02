@@ -154,6 +154,8 @@ export class ProgramManager {
      * @param {string} script
      */
     setScript(script) {
+        // Don't let weird values come in here
+        script = script.replace(/[^\x00-\x7F]/g, "");
         this._cellManager.setScript(script);
     }
 

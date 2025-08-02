@@ -45,14 +45,14 @@ export const COLOURS = {
     getColour(nameOrIndex) {
         if (typeof nameOrIndex === 'string') {
             const index = this[nameOrIndex.toUpperCase()];
-            return (index !== undefined) ? COLOURS_ARRAY[index] : null;
+            return (index !== undefined) ? COLOURS_ARRAY[index] : COLOURS_ARRAY[0];
         }
 
         if (typeof nameOrIndex === 'number') {
-            return COLOURS_ARRAY[nameOrIndex] || null;
+            return COLOURS_ARRAY[nameOrIndex] || COLOURS_ARRAY[0];
         }
 
         // I probably shouldn't do this but eh
-        return 0;
+        return COLOURS_ARRAY[0];
     }
 };
